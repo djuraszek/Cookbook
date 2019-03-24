@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Menu"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@drawable/background2">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/cookbook"
+        android:background="@drawable/background">
+
+
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="400dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/cupacke"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="40dp"
+            />
+
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/cookbook"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/buttonSelectProducts"
+        android:layout_height="wrap_content"
+        android:background="#edc9d8"
+        android:textSize="50sp"
+        android:paddingBottom="5dp"
+        android:fontFamily="@font/blackjar"
+        android:textColor="#97000000"
+        android:textAllCaps="false"
+        android:text="Cookbook"
+        />
+
+    <Button
+        android:id="@+id/buttonSelectProducts"
+        android:layout_above="@id/buttonShowAllRecipes"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="35sp"
+        android:fontFamily="@font/blackjar"
+        android:textAllCaps="false"
+        android:text="Find recipes"
+        android:background="@drawable/label"
+        />
+    <Button
+        android:id="@+id/buttonShowAllRecipes"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/label"
+        android:layout_alignParentBottom="true"
+        android:textSize="35sp"
+        android:fontFamily="@font/blackjar"
+        android:textAllCaps="false"
+        android:text="All recipes"
+        />
+
+
+</RelativeLayout>
