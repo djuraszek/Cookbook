@@ -19,8 +19,7 @@ public class Menu extends AppCompatActivity {
         System.out.println(databaseHelper.getDatabaseName());
 //        getSupportActionBar().hide();
 
-//        Product p = new Product(1,"Butter","Dairy");
-//        databaseHelper.addProduct(p);
+
     }
 
     public void values(){
