@@ -1,6 +1,8 @@
 package com.cookbook.android.cookbook;
 
 import android.graphics.Bitmap;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 
@@ -11,6 +13,7 @@ public class Recipe {
     private double rating;
     private String portion;
     private String preparation;
+    private String[] preparations;
     private ArrayList<Ingredient> ingredients;
     private Image image;
 
@@ -25,16 +28,15 @@ public class Recipe {
     }
 
     public String toString(){
-        return ""+name+", "+rating+", "+portion+", "+preparation;
+        return ""+recipeID+", "+name;
+//        return ""+name+", "+rating+", "+portion+", "+preparation;
     }
 
     public int getRecipeID() {
         return recipeID;
     }
 
-    public void addIngredient(Ingredient ingredient) {
-        ingredients.add(ingredient);
-    }
+    public void addIngredient(Ingredient ingredient) {ingredients.add(ingredient);}
 
     public ArrayList<Ingredient> getIngredients() {
         return ingredients;
@@ -82,12 +84,20 @@ public class Recipe {
     }
 
     public Bitmap getImage() {
-        return image.getBitmap();
+        if(image!=null)
+            return image.getBitmap();
+        else return null;
     }
 
     public void setImage(Image image) {
         this.image = image;
     }
 
+    public String[] getPreparations(){
+
+
+
+        return preparations;
+    }
 
 }

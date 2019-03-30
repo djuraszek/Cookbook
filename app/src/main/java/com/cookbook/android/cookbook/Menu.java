@@ -18,8 +18,7 @@ public class Menu extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
         System.out.println(databaseHelper.getDatabaseName());
 //        getSupportActionBar().hide();
-
-
+        values();
     }
 
     public void values(){
@@ -29,7 +28,7 @@ public class Menu extends AppCompatActivity {
         allRecipesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ProductsList.class);
+                Intent intent = new Intent(v.getContext(), RecipesListActivity.class);
                 startActivity(intent);
             }
         });

@@ -44,5 +44,7 @@ public class Ingredient {
         return ""+product.getName()+", "+quantity+", "+recipeId;
     }
 
-
+    public String ingredientInfo(){
+        return product.getName()+" "+quantity;
+    }
 }

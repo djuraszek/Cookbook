@@ -2,13 +2,18 @@ package com.cookbook.android.cookbook;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
+import java.sql.Blob;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -154,7 +159,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void addImage(Image i) {
         Log.e("MyDBHandler","addImage");
         ContentValues values = new ContentValues();
-        System.out.println("DB Image : "+i.toString());
+//        System.out.println("DB Image : "+i.toString());
 
         byte[] data = getBitmapAsByteArray(i.getBitmap()); // this is a function
 
@@ -172,4 +177,101 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return outputStream.toByteArray();
     }
 
+    public static Bitmap getByteArrayAsBitmap(byte[] byteArray) {
+        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+    }
+
+
+    public List<Recipe> getAllRecipeList() {
+        Log.e("DatabaseHelper","getAllRecipeList");
+        List<Recipe> recipes = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + TABLE_RECIPE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all records and adding to the list
+        if (c.moveToFirst()) {
+            do {
+                int recipeID= c.getInt(c.getColumnIndex(COLUMN_RECIPE_ID));
+                String name= c.getString(c.getColumnIndex(COLUMN_RECIPE_NAME));
+                double rating= c.getDouble(c.getColumnIndex(COLUMN_RECIPE_RATING));
+                String portion= c.getString(c.getColumnIndex(COLUMN_RECIPE_PORTION));
+                String prep= c.getString(c.getColumnIndex(COLUMN_RECIPE_PREPARATION));
+
+                Recipe r = new Recipe(recipeID, name, rating, portion, prep );
+                recipes.add(r);
+            } while (c.moveToNext());
+        }
+//        Log.e("DatabaseHelper","recipes.size()" +recipes.size());
+//        Log.e("DatabaseHelper","" +recipes);
+        return recipes;
+    }
+
+    public List<Ingredient> getAllIngredientList() {
+        Log.e("DatabaseHelper","getAllIngredientList");
+        List<Ingredient> list = new ArrayList<>();
+        List<Product> prodList = getAllProductsList();
+//        List<Recipe> recipesList = getAllRecipeList();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_INGREDIENT_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all records and adding to the list
+        if (c.moveToFirst()) {
+            do {
+                int ingredientID= c.getInt(c.getColumnIndex(COLUMN_INGREDIENT_ID));
+                int product= c.getInt(c.getColumnIndex(COLUMN_INGREDIENT_PRODUCT));
+                String quantity= c.getString(c.getColumnIndex(COLUMN_INGREDIENT_QUANTITY));
+                int recipeFK= c.getInt(c.getColumnIndex(COLUMN_INGREDIENT_RECIPE));
+
+                Ingredient r = new Ingredient(ingredientID, prodList.get(product-1),quantity,recipeFK);
+                list.add(r);
+//                recipesListView.get(recipeFK).addIngredient(r);
+            } while (c.moveToNext());
+        }
+        return list;
+    }
+
+    public List<Product> getAllProductsList() {
+        Log.e("DatabaseHelper", "getAllProductsList");
+        List<Product> list = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + TABLE_PRODUCT_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all records and adding to the list
+        if (c.moveToFirst()) {
+            do {
+                int productID = c.getInt(c.getColumnIndex(COLUMN_PRODUCT_ID));
+                String name = c.getString(c.getColumnIndex(COLUMN_PRODUCT_NAME));
+                String category = c.getString(c.getColumnIndex(COLUMN_PRODUCT_CATEGORY));
+
+                Product r = new Product(productID, name, category);
+                list.add(r);
+            } while (c.moveToNext());
+        }
+        return list;
+    }
+
+    public List<Image> getAllImagesList(){
+        Log.e("DatabaseHelper", "getAllProductsList");
+        List<Image> list = new ArrayList<>();
+//        List<Recipe> recipesList = getAllRecipeList();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_IMAGE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all records and adding to the list
+        if (c.moveToFirst()) {
+            do {
+                int imgID = c.getInt(c.getColumnIndex(COLUMN_IMAGE_ID));
+                byte[] byteArray = c.getBlob(c.getColumnIndex(COLUMN_IMAGE_BLOB));
+                int recipeFK = c.getInt(c.getColumnIndex(COLUMN_IMAGE_RECIPE));
+
+                Bitmap blob = getByteArrayAsBitmap(byteArray);
+
+                Image r = new Image(imgID, blob, recipeFK);
+                list.add(r);
+            } while (c.moveToNext());
+        }
+        return list;
+    }
 }
