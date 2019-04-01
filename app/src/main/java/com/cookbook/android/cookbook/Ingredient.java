@@ -2,7 +2,6 @@ package com.cookbook.android.cookbook;
 
 public class Ingredient {
     private Product product;
-    //    private Recipe recipe;
     private String quantity;
     private int ingedientID;
     private int recipeId;
@@ -45,6 +44,6 @@ public class Ingredient {
     }
 
     public String ingredientInfo(){
-        return product.getName()+" "+quantity;
+        return product.getName()+":    "+quantity;
     }
 }

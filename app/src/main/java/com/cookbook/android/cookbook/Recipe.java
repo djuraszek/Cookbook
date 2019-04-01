@@ -24,7 +24,9 @@ public class Recipe {
         this.preparation = preparation;
         this.rating = rating;
         this.portion = portion;
+
         ingredients = new ArrayList<>();
+        preparations = preparation.split("\n");
     }
 
     public String toString(){
@@ -94,9 +96,6 @@ public class Recipe {
     }
 
     public String[] getPreparations(){
-
-
-
         return preparations;
     }
 

@@ -70,27 +70,32 @@ public class RecipeActivity extends AppCompatActivity {
     public void setListView(){
         RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        relativeParams.setMarginStart(15);
+        relativeParams.setMargins(15,10,0,0);
+
 
         for(int i=0; i<recipe.getIngredients().size();i++){
             TextView child = new TextView(this);
             child.setLayoutParams(relativeParams);
-            child.setText(recipe.getIngredients().get(i).ingredientInfo());
+            String text =recipe.getIngredients().get(i).ingredientInfo();
+            child.setTextSize(18);
+            child.setText(text);
             ingredientsLV.addView(child);
         }
 
-//        for(int i=0; i<recipe.getIngredients().size();i++){
+//        for(int i=0; i<recipe.getPreparations().length;i++){
 //            TextView child = new TextView(this);
 //            child.setLayoutParams(relativeParams);
-//            child.setText(recipe.getIngredients().get(i).ingredientInfo());
-//            ingredientsLV.addView(child);
+//            String text = recipe.getPreparations()[i];
+//            System.out.println(text);
+//            child.setText(text);
+//            preparationsLV.addView(child);
 //        }
-
         TextView child = new TextView(this);
         child.setLayoutParams(relativeParams);
-        child.setText(recipe.getPreparation());
+        child.setTextSize(18);
+        String text = recipe.getPreparation();
+        child.setText(text);
         preparationsLV.addView(child);
-
     }
 
 

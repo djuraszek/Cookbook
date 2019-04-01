@@ -13,6 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         android:textSize="30sp"
         android:fontFamily="@font/blackjar"
         android:textColor="#000000"
@@ -26,48 +28,50 @@
         android:layout_height="50dp"
         android:paddingBottom="5dp"
         android:src="@drawable/text_underline"/>
-
-    <LinearLayout
+    <ScrollView
         android:layout_below="@id/recipeName"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
 
-        <ImageView
-            android:id="@+id/recipeImg"
+        <LinearLayout
+            android:layout_below="@id/recipeName"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:src="@drawable/chocoloate_cake"
-            android:background="#000000"
-            />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/recipeImg"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/chocoloate_cake"
+                android:background="#000000"
+                />
 
-            <RatingBar
-                android:id="@+id/ratingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"/>
-            
-            <!--<TextView-->
-                <!--android:id="@+id/avgRate"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="4,10"-->
-                <!--android:textSize="30sp"-->
-                <!--android:gravity="center"-->
-                <!--android:layout_alignParentEnd="true"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_toRightOf="@+id/ratingBar"/>-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        </RelativeLayout>
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"/>
+
+                <!--<TextView-->
+                    <!--android:id="@+id/avgRate"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="4,10"-->
+                    <!--android:textSize="30sp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:layout_alignParentEnd="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_toRightOf="@+id/ratingBar"/>-->
+
+            </RelativeLayout>
         
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fillViewport="true">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -120,9 +124,8 @@
                     >
                 </LinearLayout>
             </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
-
+        </LinearLayout>
+    </ScrollView>
 
 
 </RelativeLayout>
