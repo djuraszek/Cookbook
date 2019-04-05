@@ -1,21 +1,22 @@
-package com.cookbook.android.cookbook;
+package com.cookbook.android.cookbook.adapters;
 
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Date;
+import com.cookbook.android.cookbook.DatabaseHelper;
+import com.cookbook.android.cookbook.R;
+import com.cookbook.android.cookbook.activities.RecipeActivity;
+import com.cookbook.android.cookbook.classes.Recipe;
+
 import java.util.List;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;

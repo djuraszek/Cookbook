@@ -10,8 +10,12 @@ import android.graphics.BitmapFactory;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.cookbook.android.cookbook.classes.Image;
+import com.cookbook.android.cookbook.classes.Ingredient;
+import com.cookbook.android.cookbook.classes.Product;
+import com.cookbook.android.cookbook.classes.Recipe;
+
 import java.io.ByteArrayOutputStream;
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     boolean showLogs = false;
     public static final String SELECT_ALL_FROM = "Select*FROM ";
+
     //initialize the databaseHelper
 
     //information of databaseHelper
@@ -274,4 +279,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return list;
     }
+
+    public List<String> getDistinctCategories(){
+        String SELECT_DISTINCT_CATEGORIES = "SELECT distinct Category FROM " +TABLE_PRODUCT_NAME+" WHERE Category <> 'NULL'";
+
+        List<String> categoriesList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(SELECT_DISTINCT_CATEGORIES, null);
+        // looping through all records and adding to the list
+        if (c.moveToFirst()) {
+            do {
+                String category = c.getString(c.getColumnIndex(COLUMN_PRODUCT_CATEGORY));
+                categoriesList.add(category);
+            } while (c.moveToNext());
+        }
+        return categoriesList;
+    }
+
+
+
 }

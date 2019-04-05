@@ -1,12 +1,14 @@
-package com.cookbook.android.cookbook;
+package com.cookbook.android.cookbook.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ListView;
 
-import java.util.List;
+import com.cookbook.android.cookbook.DatabaseHelper;
+import com.cookbook.android.cookbook.R;
+import com.cookbook.android.cookbook.RecipesBookDB;
+import com.cookbook.android.cookbook.adapters.RecipesListAdaper;
 
 public class RecipesListActivity extends AppCompatActivity {
 

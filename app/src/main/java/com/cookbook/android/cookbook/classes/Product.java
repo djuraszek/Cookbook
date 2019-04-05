@@ -1,4 +1,4 @@
-package com.cookbook.android.cookbook;
+package com.cookbook.android.cookbook.classes;
 
 public class Product {
     private String category;

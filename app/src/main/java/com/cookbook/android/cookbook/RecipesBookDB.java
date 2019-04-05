@@ -1,8 +1,10 @@
 package com.cookbook.android.cookbook;
 
-import android.util.Log;
+import com.cookbook.android.cookbook.classes.Image;
+import com.cookbook.android.cookbook.classes.Ingredient;
+import com.cookbook.android.cookbook.classes.Product;
+import com.cookbook.android.cookbook.classes.Recipe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

@@ -1,10 +1,13 @@
-package com.cookbook.android.cookbook;
+package com.cookbook.android.cookbook.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.cookbook.android.cookbook.DatabaseHelper;
+import com.cookbook.android.cookbook.R;
 
 public class Menu extends AppCompatActivity {
     DatabaseHelper databaseHelper;

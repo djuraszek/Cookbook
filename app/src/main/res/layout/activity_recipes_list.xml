@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:padding="20dp"
     android:background="@color/background"
-    tools:context=".RecipesListActivity">
+    tools:context=".activities.RecipesListActivity">
 
     <ImageView
         android:layout_width="match_parent"

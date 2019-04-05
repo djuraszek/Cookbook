@@ -1,4 +1,4 @@
-package com.cookbook.android.cookbook;
+package com.cookbook.android.cookbook.classes;
 
 public class Ingredient {
     private Product product;

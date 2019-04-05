@@ -9,12 +9,12 @@
         android:roundIcon="@mipmap/cupcake_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RecipeActivity"></activity>
-        <activity android:name=".RecipesListActivity" />
+        <activity android:name=".activities.RecipeActivity"></activity>
+        <activity android:name=".activities.RecipesListActivity" />
         <activity
-            android:name=".ProductsList"
-            android:parentActivityName=".Menu" />
-        <activity android:name=".Menu">
+            android:name=".activities.ProductsList"
+            android:parentActivityName=".activities.Menu" />
+        <activity android:name=".activities.Menu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
