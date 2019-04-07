@@ -220,6 +220,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selectQuery = "SELECT  * FROM " + TABLE_INGREDIENT_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
+        boolean productFound = false;
         // looping through all records and adding to the list
         if (c.moveToFirst()) {
             do {
@@ -227,15 +228,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 int product= c.getInt(c.getColumnIndex(COLUMN_INGREDIENT_PRODUCT));
                 String quantity= c.getString(c.getColumnIndex(COLUMN_INGREDIENT_QUANTITY));
                 int recipeFK= c.getInt(c.getColumnIndex(COLUMN_INGREDIENT_RECIPE));
+
                 for(int i = 0; i < prodList.size(); i++) {
                     if(product == prodList.get(i).getProductID()) {
                         Ingredient r = new Ingredient(ingredientID, prodList.get(i),quantity,recipeFK);
                         list.add(r);
+                        productFound = true;
                     }
                 }
+                if(!productFound)
+                    Log.e("DatabaseHelper","getAllIngredientList - product not found - ingredient not added");
 //                recipesListView.get(recipeFK).addIngredient(r);
+
             } while (c.moveToNext());
         }
+        Log.d("DatabaseHelper","ingredientList.size()"+list.size());
         return list;
     }
 

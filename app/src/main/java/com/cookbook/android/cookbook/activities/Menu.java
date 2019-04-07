@@ -9,6 +9,13 @@ import android.widget.Button;
 import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 public class Menu extends AppCompatActivity {
     DatabaseHelper databaseHelper;
     Button allRecipesBtn, findRecipeBtn;
@@ -19,6 +26,15 @@ public class Menu extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         databaseHelper = new DatabaseHelper(this);
+        String storedDBPath = databaseHelper.getReadableDatabase().getPath();
+        File file = new File(storedDBPath);
+//        try {
+//            copyDatabase(file);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+
         System.out.println(databaseHelper.getDatabaseName());
 //        getSupportActionBar().hide();
         values();
@@ -42,6 +58,24 @@ public class Menu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    String DB_NAME = "cookbook.db";
+
+    private void copyDatabase(File dbFile) throws IOException {
+        InputStream is = getAssets().open(DB_NAME);
+        OutputStream os = new FileOutputStream(dbFile);
+
+
+
+        byte[] buffer = new byte[1024];
+        while (is.read(buffer) > 0) {
+            os.write(buffer);
+        }
+
+        os.flush();
+        os.close();
+        is.close();
     }
 
 }

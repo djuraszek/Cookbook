@@ -1,5 +1,7 @@
 package com.cookbook.android.cookbook;
 
+import android.util.Log;
+
 import com.cookbook.android.cookbook.classes.Image;
 import com.cookbook.android.cookbook.classes.Ingredient;
 import com.cookbook.android.cookbook.classes.Product;
@@ -32,22 +34,45 @@ public class RecipesBookDB {
 
         //add images to recipe
         for(int i=0; i<imageList.size();i++){
-            recipeList.get(imageList.get(i).getRecipeId()-1).setImage(imageList.get(i));
+            getRecipe(imageList.get(i).getRecipeId()).setImage(imageList.get(i));
         }
         //add ingredients to recipe
         for(int i=0; i<ingredientList.size();i++){
-            recipeList.get(ingredientList.get(i).getRecipeId()-1).addIngredient(ingredientList.get(i));
+
+            System.out.println(i+" -> r:"+ingredientList.get(i).getRecipeId());
+            getRecipe(ingredientList.get(i).getRecipeId()).addIngredient(ingredientList.get(i));
         }
     }
+
+    public Recipe getRecipe(int recipeId){
+        for(int i=0;i<recipeList.size();i++){
+            if(recipeList.get(i).getRecipeID() == recipeId)
+                return recipeList.get(i);
+        }
+
+        Log.e("RecipesBookDb","getRecipe("+recipeId+") -> recipe not found");
+        return null;
+    }
+
+    public Ingredient getIngredient(int ingredientID){
+        for(int i=0;i<ingredientList.size();i++){
+            if(ingredientList.get(i).getIngedientID() == ingredientID)
+                return ingredientList.get(i);
+        }
+        Log.e("RecipesBookDb","getIngredient -> ingredient not found");
+        return null;
+    }
+
+
 
     public List<Recipe> getRecipeList() {
 //        Log.e("RecipesBookDB","getRecipeList().size() "+recipeList.size());
 //        System.out.println(recipeList);
         return recipeList;
     }
-    public Recipe getRecipe(int position) {
-        return recipeList.get(position);
-    }
+//    public Recipe getRecipe(int position) {
+//        return recipeList.get(position);
+//    }
 
     public List<Ingredient> getIngredientList() {
         return ingredientList;
