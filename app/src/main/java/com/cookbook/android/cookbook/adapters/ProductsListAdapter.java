@@ -14,14 +14,16 @@ import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
 import com.cookbook.android.cookbook.classes.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
-public class ProductsListAdaper extends BaseAdapter {
+public class ProductsListAdapter extends BaseAdapter {
 
     boolean showComments=false;
     boolean showLogs=false;
+    private List<Product> checkedProducts;
 
     private Product product;
     private DatabaseHelper databaseHelper;
@@ -29,12 +31,13 @@ public class ProductsListAdaper extends BaseAdapter {
     private LayoutInflater inflater;
     private List<Product> productList;
 
-    public ProductsListAdaper(Context context, List<Product> productList) {
+    public ProductsListAdapter(Context context, List<Product> productList) {
         Log.e("SeansListAdapter","set Adapter od Screening List");
         this.context = context;
         this.productList = productList;
+        checkedProducts = new ArrayList<>();
 
-        if(showLogs)Log.v("ListAdapter","seansow w dniu: "+ productList.size());
+        if(showLogs)Log.v("ListAdapter","productsList: "+ productList.size());
     }
 
     @Override
@@ -73,14 +76,19 @@ public class ProductsListAdaper extends BaseAdapter {
         listView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(productCheckBox.isChecked())
+                if(productCheckBox.isChecked()){
                     productCheckBox.setChecked(false);
-                else
+                    checkedProducts.remove(product);
+                }
+                else {
                     productCheckBox.setChecked(true);
-
+                    checkedProducts.add(product);
+                }
             }
         });
 
         return listView;
     }
+
+//    public List<Product> getCheckedProducts(){return checkedProducts;}
 }

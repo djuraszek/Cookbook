@@ -12,6 +12,9 @@ public class Product {
         this.name = name;
     }
 
+    public String toString(){
+        return name + " <" + category+">";
+    }
 
     public int getProductID() {
         return productID;

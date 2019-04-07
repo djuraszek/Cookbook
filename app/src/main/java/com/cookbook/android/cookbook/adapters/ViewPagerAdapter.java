@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 
-import com.cookbook.android.cookbook.activities.ProductsFragment;
+import com.cookbook.android.cookbook.classes.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +33,16 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         mFragmentTitleList.add(title);
         ProductsFragment newFragment = (ProductsFragment) fragment;
     }
+
+//    public List<Product> getCheckedProducts(){
+//        List<Product> list = new ArrayList<>();
+//        for(int i=0;i<mFragmentList.size();i++){
+//            ProductsFragment fragment = (ProductsFragment) mFragmentList.get(i);
+//            list.addAll(fragment.getCheckedProducts());
+//        }
+//        return list;
+//    }
+
     @Override
     public CharSequence getPageTitle(int position) {
         return mFragmentTitleList.get(position);
