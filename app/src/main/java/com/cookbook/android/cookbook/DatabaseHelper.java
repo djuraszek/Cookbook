@@ -224,26 +224,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (c.moveToFirst()) {
             do {
                 int ingredientID= c.getInt(c.getColumnIndex(COLUMN_INGREDIENT_ID));
-                int productID= c.getInt(c.getColumnIndex(COLUMN_INGREDIENT_PRODUCT));
+                int product= c.getInt(c.getColumnIndex(COLUMN_INGREDIENT_PRODUCT));
                 String quantity= c.getString(c.getColumnIndex(COLUMN_INGREDIENT_QUANTITY));
                 int recipeFK= c.getInt(c.getColumnIndex(COLUMN_INGREDIENT_RECIPE));
-
-                Ingredient r = new Ingredient(ingredientID, getProduct(prodList,productID),quantity,recipeFK);
-                list.add(r);
+                for(int i = 0; i < prodList.size(); i++) {
+                    if(product == prodList.get(i).getProductID()) {
+                        Ingredient r = new Ingredient(ingredientID, prodList.get(i),quantity,recipeFK);
+                        list.add(r);
+                    }
+                }
 //                recipesListView.get(recipeFK).addIngredient(r);
             } while (c.moveToNext());
         }
         return list;
-    }
-
-    public Product getProduct(List<Product> list, int productId){
-        for(int i=0;i<list.size();i++){
-            if(list.get(i).getProductID() == productId){
-                return list.get(i);
-            }
-        }
-        Log.e("DatabaseHelper","getRecipe - recipe not found");
-        return null;
     }
 
     public List<Product> getAllProductsList() {
@@ -258,7 +251,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 int productID = c.getInt(c.getColumnIndex(COLUMN_PRODUCT_ID));
                 String name = c.getString(c.getColumnIndex(COLUMN_PRODUCT_NAME));
                 String category = c.getString(c.getColumnIndex(COLUMN_PRODUCT_CATEGORY));
-
                 Product r = new Product(productID, name, category);
                 list.add(r);
             } while (c.moveToNext());
