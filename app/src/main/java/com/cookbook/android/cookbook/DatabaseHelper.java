@@ -283,7 +283,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public List<String> getDistinctCategories(){
-        String SELECT_DISTINCT_CATEGORIES = "SELECT distinct Category FROM " +TABLE_PRODUCT_NAME+" WHERE Category <> 'NULL'";
+        String SELECT_DISTINCT_CATEGORIES = "SELECT Category FROM( SELECT distinct Category, COUNT(ProductName) \n" +
+                "FROM Product WHERE Category<>'NULL' Group by Category Order by COUNT(ProductName) desc, Category)";
 
         List<String> categoriesList = new ArrayList<>();
 
