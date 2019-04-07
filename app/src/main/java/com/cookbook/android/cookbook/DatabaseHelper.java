@@ -224,16 +224,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (c.moveToFirst()) {
             do {
                 int ingredientID= c.getInt(c.getColumnIndex(COLUMN_INGREDIENT_ID));
-                int product= c.getInt(c.getColumnIndex(COLUMN_INGREDIENT_PRODUCT));
+                int productID= c.getInt(c.getColumnIndex(COLUMN_INGREDIENT_PRODUCT));
                 String quantity= c.getString(c.getColumnIndex(COLUMN_INGREDIENT_QUANTITY));
                 int recipeFK= c.getInt(c.getColumnIndex(COLUMN_INGREDIENT_RECIPE));
 
-                Ingredient r = new Ingredient(ingredientID, prodList.get(product-1),quantity,recipeFK);
+                Ingredient r = new Ingredient(ingredientID, getProduct(prodList,productID),quantity,recipeFK);
                 list.add(r);
 //                recipesListView.get(recipeFK).addIngredient(r);
             } while (c.moveToNext());
         }
         return list;
+    }
+
+    public Product getProduct(List<Product> list, int productId){
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).getProductID() == productId){
+                return list.get(i);
+            }
+        }
+        Log.e("DatabaseHelper","getRecipe - recipe not found");
+        return null;
     }
 
     public List<Product> getAllProductsList() {
