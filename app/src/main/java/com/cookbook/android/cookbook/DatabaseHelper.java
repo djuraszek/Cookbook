@@ -227,9 +227,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 int product= c.getInt(c.getColumnIndex(COLUMN_INGREDIENT_PRODUCT));
                 String quantity= c.getString(c.getColumnIndex(COLUMN_INGREDIENT_QUANTITY));
                 int recipeFK= c.getInt(c.getColumnIndex(COLUMN_INGREDIENT_RECIPE));
-
-                Ingredient r = new Ingredient(ingredientID, prodList.get(product-1),quantity,recipeFK);
-                list.add(r);
+                for(int i = 0; i < prodList.size(); i++) {
+                    if(product == prodList.get(i).getProductID()) {
+                        Ingredient r = new Ingredient(ingredientID, prodList.get(i),quantity,recipeFK);
+                        list.add(r);
+                    }
+                }
 //                recipesListView.get(recipeFK).addIngredient(r);
             } while (c.moveToNext());
         }
@@ -248,7 +251,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 int productID = c.getInt(c.getColumnIndex(COLUMN_PRODUCT_ID));
                 String name = c.getString(c.getColumnIndex(COLUMN_PRODUCT_NAME));
                 String category = c.getString(c.getColumnIndex(COLUMN_PRODUCT_CATEGORY));
-
                 Product r = new Product(productID, name, category);
                 list.add(r);
             } while (c.moveToNext());
