@@ -274,6 +274,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all records and adding to the list
+        System.out.println(""+c.getColumnName(0)+
+                ""+c.getColumnName(1)+
+                ""+c.getColumnName(2));
         if (c.moveToFirst()) {
             do {
                 int imgID = c.getInt(c.getColumnIndex(COLUMN_IMAGE_ID));

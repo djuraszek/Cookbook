@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
 import com.cookbook.android.cookbook.activities.Menu;
+import com.cookbook.android.cookbook.activities.ProductsList;
 import com.cookbook.android.cookbook.classes.Product;
 
 import java.util.ArrayList;
@@ -50,16 +51,20 @@ public class ProductsFragment extends Fragment {
 //        this.categoryProductList = productList;
         this.databaseHelper = db;
         this.categoryName = categoryName;
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(showLogs) Log.d("->FragmentRepertory", "onCreate");
+        categoryName = getArguments().getString("categoryName");
+        if(showLogs) Log.d("->FragmentRepertory", "onCreate: "+categoryName);
         if(databaseHelper == null){
             Log.e("->FragmentRepertory", "null databaseHelper");
-            databaseHelper = new DatabaseHelper(getActivity().getApplicationContext());
+            databaseHelper = new DatabaseHelper(getContext());
+            System.out.println("database null: "+(databaseHelper==null));
         }
+
     }
 
     @Override
@@ -67,6 +72,7 @@ public class ProductsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         if(showLogs) Log.d("->FragmentRepertory", "onCreateView");
+
 
         v = container;
         v = inflater.inflate(R.layout.fragment_products, container, false);
@@ -99,13 +105,14 @@ public class ProductsFragment extends Fragment {
     public List<Product> getProducts(){
         List<Product> allProductList = databaseHelper.getAllProductsList();
         Log.d("ProductsFragment","category: "+categoryName);
-        System.out.println("ProductsFragment\n "+allProductList);
+//        System.out.println("ProductsFragment\n "+allProductList);
          List<Product> productList = new ArrayList<>();
+//         this.sav
 
          for(int i=0; i<allProductList.size();i++){
              if(allProductList.get(i).getName()!= null) {
                  String productCategory = allProductList.get(i).getCategory();
-             System.out.println(productCategory+ " "+ categoryName+ " ");
+//             System.out.println(productCategory+ " "+ categoryName+ " ");
 
                  if (productCategory.compareTo(categoryName) == 0) {
                      productList.add(allProductList.get(i));
@@ -120,13 +127,13 @@ public class ProductsFragment extends Fragment {
 //        return adapter.getCheckedProducts();
 //    }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Intent intent = new Intent(getContext(), Menu.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        Intent intent = new Intent(getContext(), Menu.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        startActivity(intent);
+//    }
 
 
 
