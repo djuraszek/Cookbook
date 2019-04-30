@@ -51,7 +51,6 @@ public class ProductsFragment extends Fragment {
 //        this.categoryProductList = productList;
         this.databaseHelper = db;
         this.categoryName = categoryName;
-
     }
 
     @Override
@@ -64,7 +63,6 @@ public class ProductsFragment extends Fragment {
             databaseHelper = new DatabaseHelper(getContext());
             System.out.println("database null: "+(databaseHelper==null));
         }
-
     }
 
     @Override
@@ -72,8 +70,6 @@ public class ProductsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         if(showLogs) Log.d("->FragmentRepertory", "onCreateView");
-
-
         v = container;
         v = inflater.inflate(R.layout.fragment_products, container, false);
 
@@ -91,8 +87,6 @@ public class ProductsFragment extends Fragment {
             if (showComments)
                 Log.e("FragmentRepertory", "productsList " + productsList.getCount());
         }
-//        Log.d("ProductsFragment", "productsList.getCount(): "+productsList.getCount());
-
         return v;
     }
 
@@ -121,21 +115,4 @@ public class ProductsFragment extends Fragment {
          }
         return productList;
     }
-
-//    public List<Product> getCheckedProducts(){
-//        ProductsListAdapter adapter = (ProductsListAdapter)productsList.getAdapter();
-//        return adapter.getCheckedProducts();
-//    }
-
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        Intent intent = new Intent(getContext(), Menu.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        startActivity(intent);
-//    }
-
-
-
-
 }
