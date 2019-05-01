@@ -1,5 +1,6 @@
 package com.cookbook.android.cookbook.activities;
 
+import android.support.v4.app.INotificationSideChannel;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +16,12 @@ import android.widget.Toast;
 import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
 import com.cookbook.android.cookbook.RecipesBookDB;
+import com.cookbook.android.cookbook.classes.Ingredient;
 import com.cookbook.android.cookbook.classes.Recipe;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class RecipeActivity extends AppCompatActivity {
     Recipe recipe ;
@@ -71,11 +77,17 @@ public class RecipeActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         relativeParams.setMargins(15,10,0,0);
 
-
+//        List<Ingredient> ingredients = recipe.getIngredients();
+//        Collections.sort(ingredients, new Comparator<Recipe>() {
+//            public int compare(I r1, Recipe r2) {
+//                return r1.getName().compareTo(r2.getName());
+//            }
+//        });
         for(int i=0; i<recipe.getIngredients().size();i++){
             TextView child = new TextView(this);
             child.setLayoutParams(relativeParams);
-            String text =recipe.getIngredients().get(i).ingredientInfo();
+            List<Ingredient> ingredients = sortIngredients(recipe.getIngredients());
+            String text = ingredients.get(i).ingredientInfo();
             child.setTextSize(18);
             child.setText(text);
             ingredientsLV.addView(child);
@@ -95,5 +107,14 @@ public class RecipeActivity extends AppCompatActivity {
         String text = recipe.getPreparation();
         child.setText(text);
         preparationsLV.addView(child);
+    }
+
+    public List<Ingredient> sortIngredients(List<Ingredient> ingredients) {
+        Collections.sort(ingredients, new Comparator<Ingredient>() {
+            public int compare(Ingredient i1, Ingredient i2) {
+                return i1.getProduct().getName().compareTo(i2.getProduct().getName());
+            }
+        });
+        return ingredients;
     }
 }

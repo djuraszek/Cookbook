@@ -1,26 +1,24 @@
 package com.cookbook.android.cookbook.adapters;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
-import com.cookbook.android.cookbook.activities.Menu;
-import com.cookbook.android.cookbook.activities.ProductsList;
 import com.cookbook.android.cookbook.classes.Product;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -41,10 +39,8 @@ public class ProductsFragment extends Fragment {
     private ProductsListAdapter listAdapter;
     private List<Product>categoryProductList;
     private String categoryName;
-    private FragmentActivity myContext;
-    private List<Integer> checkedProducts;
+    private List<Integer> productsID;
     public ProductsFragment() {
-        // Required empty public constructor
     }
 
     @SuppressLint("ValidFragment")
@@ -88,9 +84,12 @@ public class ProductsFragment extends Fragment {
             if (showComments)
                 Log.e("FragmentRepertory", "productsList " + productsList.getCount());
         }
-//        Log.d("ProductsFragment", "productsList.getCount(): "+productsList.getCount());
-//        getCheckedProducts();
+        productsID = listAdapter.getSelectedItems();
         return v;
+    }
+
+    public List<Integer> getProductsID() {
+        return productsID;
     }
 
     public interface OnFragmentInteractionListener{
@@ -98,32 +97,31 @@ public class ProductsFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-
     public List<Product> getProducts(){
         List<Product> allProductList = databaseHelper.getAllProductsList();
         Log.d("ProductsFragment","category: "+categoryName);
 //        System.out.println("ProductsFragment\n "+allProductList);
          List<Product> productList = new ArrayList<>();
-//         this.sav
-
          for(int i=0; i<allProductList.size();i++){
              if(allProductList.get(i).getName()!= null) {
                  String productCategory = allProductList.get(i).getCategory();
 //             System.out.println(productCategory+ " "+ categoryName+ " ");
-
                  if (productCategory.compareTo(categoryName) == 0) {
                      productList.add(allProductList.get(i));
                  }
              }
          }
-        return productList;
+        return sortProductsList(productList);
     }
-//    public List<Product> getCheckedProducts(){
-//        ProductsListAdapter adapter = (ProductsListAdapter)productsList.getAdapter();
-//        return adapter.getCheckedProducts();
-//    }
-//
-//
+
+    public List<Product> sortProductsList(List<Product> products) {
+        Collections.sort(products, new Comparator<Product>() {
+            public int compare(Product p1, Product p2) {
+                return p1.getName().compareTo(p2.getName());
+            }
+        });
+        return products;
+    }
 
 //    @Override
 //    public void onDestroy() {

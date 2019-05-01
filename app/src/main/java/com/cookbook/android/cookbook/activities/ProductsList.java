@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
 import com.cookbook.android.cookbook.adapters.ProductsFragment;
@@ -16,6 +18,8 @@ import com.cookbook.android.cookbook.adapters.ViewPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.cookbook.android.cookbook.adapters.ProductsListAdapter.checkedProduct;
 
 public class ProductsList extends AppCompatActivity {
     TextView categoryTV;
@@ -44,7 +48,6 @@ public class ProductsList extends AppCompatActivity {
 
         for(int i=0; i<categoriesList.size(); i++) {
             Bundle args = new Bundle();
-
             String categoryName = categoriesList.get(i);
             args.putString("categoryName", categoryName);
             ProductsFragment fragment = new ProductsFragment(db, categoryName);
@@ -52,7 +55,7 @@ public class ProductsList extends AppCompatActivity {
             adapter.addFragment(fragment, categoryName);
         }
         viewPager.setAdapter(adapter);
-        createIngredientsList();
+        chosenIngredients = checkedProduct;
         showFilteredRecipes();
     }
 
@@ -64,21 +67,17 @@ public class ProductsList extends AppCompatActivity {
 //        productLV.setAdapter(adapter);
 //    }
 
-    public void createIngredientsList() {
-        this.chosenIngredients = new ArrayList<>();
-        chosenIngredients.add(10);
-        chosenIngredients.add(11);
-        chosenIngredients.add(55);
-    }
-
     public void showFilteredRecipes() {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), RecipesListActivity.class);
-                intent.putExtra("showFilteredList", true);
-                intent.putIntegerArrayListExtra("chosenIngredients", (ArrayList<Integer>) chosenIngredients);
-                startActivity(intent);
+                if(chosenIngredients.size() >= 3) {
+                    Intent intent = new Intent(view.getContext(), RecipesListActivity.class);
+                    intent.putExtra("showFilteredList", true);
+                    intent.putIntegerArrayListExtra("chosenIngredients", (ArrayList<Integer>) chosenIngredients);
+                    startActivity(intent);
+                }
+                else Toast.makeText(getApplicationContext(), "Wybierz przynajmniej 3 produkty.", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -128,4 +127,3 @@ public class ProductsList extends AppCompatActivity {
         super.onDetachedFromWindow();
     }
 }
-

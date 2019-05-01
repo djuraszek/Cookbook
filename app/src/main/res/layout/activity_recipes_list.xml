@@ -14,56 +14,61 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black"/>
-
     <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:padding="10dp"
-        android:background="@color/white">
+        >
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:text="Przepisy: "
-                android:textSize="30sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:padding="10dp"
+            android:background="@color/white">
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                >
-                <SearchView
-                    android:id="@+id/searchView"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="Przepisy: "
+                    android:textSize="30sp"
                     android:layout_width="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_height="wrap_content" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"/>
-            </RelativeLayout>
+                    >
+                    <SearchView
+                        android:id="@+id/searchView"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+            <ListView
+                android:id="@+id/recipesList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </ListView>
+
+            <TextView
+                android:id="@+id/recipesText2"
+                android:text="Zobacz również: "
+                android:textSize="30sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+            <ListView
+                android:id="@+id/recipesList2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+            </ListView>
 
         </LinearLayout>
-        <ListView
-            android:id="@+id/recipesList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </ListView>
-
-        <TextView
-            android:id="@+id/recipesText2"
-            android:text="Zobacz również: "
-            android:textSize="30sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"/>
-        <ListView
-            android:id="@+id/recipesList2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
-        </ListView>
-
         <TextView
             android:id="@+id/emptyMessage"
             android:text="Nie znaleziono przepisów spełniających wybrane kryteria."
