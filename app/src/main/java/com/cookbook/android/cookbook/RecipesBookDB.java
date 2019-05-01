@@ -6,6 +6,8 @@ import com.cookbook.android.cookbook.classes.Ingredient;
 import com.cookbook.android.cookbook.classes.Product;
 import com.cookbook.android.cookbook.classes.Recipe;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -56,13 +58,13 @@ public class RecipesBookDB {
         return null;
     }
 
-    public Recipe getRecipeByName(String recipeName){
+    public List<Recipe> getRecipesByName(String recipeName){
+        List<Recipe> recipes = new ArrayList<>();
         for(int i = 0; i<recipeList.size(); i++){
-            if(recipeList.get(i).getName().equals(recipeName))
-                return recipeList.get(i);
+            if(recipeList.get(i).getName().contains(recipeName))
+                recipes.add(recipeList.get(i));
         }
-        Log.e("RecipesBookDb","getRecipeByName("+recipeName+") -> recipe not found");
-        return null;
+        return sortList(recipes);
     }
 
     public List<Recipe> getRecipesByIngredients(List<Integer> ingredients) {
@@ -96,42 +98,12 @@ public class RecipesBookDB {
                 otherRecipes.add(r);
             }
         }
-        return recipeListByIngredients;
+        return sortList(recipeListByIngredients);
     }
 
     public List<Recipe> getOtherRecipes() {
-        return otherRecipes;
+        return sortList(otherRecipes);
     }
-
-//    public List<Recipe> getRecipesByIngredients(List<Integer> ingredients) {
-//        recipeListByIngredients = new ArrayList<>();
-//        int size = ingredients.size();
-//        int percent = (int) 0.7*size;
-//        for(int i = 0; i < recipeList.size(); i++) {
-//            int counter = 0;
-//            Recipe currentRecipe = recipeList.get(i);
-//            boolean productContain = false;
-//            int j = 0;
-//            do {
-//                int k = 0;
-//                do {
-//                    if(currentRecipe.getIngredients().get(k).getProduct().getProductID() == ingredients.get(j)) {
-//                        productContain = true;
-//                        counter++;
-//                    }
-//                    k++;
-//                } while((k < currentRecipe.getIngredients().size()) && !productContain);
-//                j++;
-//            }while(productContain && j < ingredients.size());
-//            if(productContain && (counter == size)) {
-//                Recipe r = new Recipe(currentRecipe.getRecipeID(),
-//                        currentRecipe.getName(), currentRecipe.getRating(),
-//                        currentRecipe.getPortion(), currentRecipe.getPreparation());
-//                recipeListByIngredients.add(r);
-//            }
-//        }
-//        return recipeListByIngredients;
-//    }
 
     public Ingredient getIngredient(int ingredientID){
         for(int i=0;i<ingredientList.size();i++){
@@ -143,7 +115,7 @@ public class RecipesBookDB {
     }
 
     public List<Recipe> getRecipeList() {
-        return recipeList;
+        return sortList(recipeList);
     }
 
     public List<Ingredient> getIngredientList() {
@@ -156,5 +128,14 @@ public class RecipesBookDB {
 
     public List<Image> getImageList() {
         return imageList;
+    }
+
+    public List<Recipe> sortList(List<Recipe> recipes) {
+        Collections.sort(recipes, new Comparator<Recipe>() {
+            public int compare(Recipe r1, Recipe r2) {
+                return r1.getName().compareTo(r2.getName());
+            }
+        });
+        return recipes;
     }
 }
