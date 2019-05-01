@@ -34,11 +34,10 @@ public class ProductsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products_list);
         db = new DatabaseHelper(getApplicationContext());
-        //todo get all categories
+
         categoriesList = db.getDistinctCategories();
         Log.e("ProductsList","caegoriesList.size() "+categoriesList.size());
 
-        //todo get PageViewer
         viewPager = (ViewPager)findViewById(R.id.productListVP);
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         searchButton = (Button)findViewById(R.id.prodListButton);
@@ -129,3 +128,4 @@ public class ProductsList extends AppCompatActivity {
         super.onDetachedFromWindow();
     }
 }
+
