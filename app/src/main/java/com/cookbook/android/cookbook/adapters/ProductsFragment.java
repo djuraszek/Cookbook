@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,13 +36,13 @@ public class ProductsFragment extends Fragment {
     boolean showLogs=false;
     private DatabaseHelper databaseHelper;
     private View v;
-    private ListView productsList;
+    private static ListView productsList;
     private TextView categoryTextView;
     private ProductsListAdapter listAdapter;
     private List<Product>categoryProductList;
     private String categoryName;
     private FragmentActivity myContext;
-
+    private List<Integer> checkedProducts;
     public ProductsFragment() {
         // Required empty public constructor
     }
@@ -92,7 +93,7 @@ public class ProductsFragment extends Fragment {
                 Log.e("FragmentRepertory", "productsList " + productsList.getCount());
         }
 //        Log.d("ProductsFragment", "productsList.getCount(): "+productsList.getCount());
-
+//        getCheckedProducts();
         return v;
     }
 
@@ -126,6 +127,8 @@ public class ProductsFragment extends Fragment {
 //        ProductsListAdapter adapter = (ProductsListAdapter)productsList.getAdapter();
 //        return adapter.getCheckedProducts();
 //    }
+//
+//
 
 //    @Override
 //    public void onDestroy() {

@@ -12,7 +12,6 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
-import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
 import com.cookbook.android.cookbook.classes.Product;
 
@@ -31,7 +30,7 @@ public class ProductsListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<Product> productList;
     private boolean[] mChecked;
-
+    private List<Integer> checkedProduct = new ArrayList<>();
     // sparse boolean array for checking the state of the items
     private SparseBooleanArray itemStateArray = new SparseBooleanArray();
 
@@ -46,8 +45,8 @@ public class ProductsListAdapter extends BaseAdapter {
             //Toast.makeText(con, checked.toString(),Toast.LENGTH_SHORT).show();
         }
         if(showLogs)Log.v("ListAdapter","productsList: "+ productList.size());
-    }
 
+    }
 
 
     @Override
@@ -84,10 +83,11 @@ public class ProductsListAdapter extends BaseAdapter {
         productCheckBox.setTag(Integer.valueOf(position)); // set the tag so we can identify the correct row in the listener
         productCheckBox.setChecked(mChecked[position]); // set the status as we stored it        
         productCheckBox.setOnCheckedChangeListener(mListener); // set the listener
-
-
+        if(productCheckBox.isChecked()) checkedProduct.add(product.getProductID());
         return listView;
     }
+
+
 
     CompoundButton.OnCheckedChangeListener mListener = new CompoundButton.OnCheckedChangeListener() {
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

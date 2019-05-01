@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
@@ -33,14 +34,13 @@ public class RecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe);
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         recipesBookDB = new RecipesBookDB(dbHelper);
-
         intentContent();
         setListView();
     }
 
     public void intentContent(){
         int recipeId = getIntent().getIntExtra("recipe",-1);
-        recipe = recipesBookDB.getRecipe(recipeId-1);
+        recipe = recipesBookDB.getRecipe(recipeId);
 //        Log.e("RecipeActivity","recipe: "+recipe.toString());
 
 //        ingredientsLV = (ListView) findViewById(R.id.ingredientsListView);
@@ -96,7 +96,4 @@ public class RecipeActivity extends AppCompatActivity {
         child.setText(text);
         preparationsLV.addView(child);
     }
-
-
-
 }
