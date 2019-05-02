@@ -186,6 +186,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
     }
 
+    public int getProductId(String productName){
+        String selectQuery = "SELECT  * FROM " + TABLE_PRODUCT_NAME;
+        selectQuery += " WHERE "+COLUMN_PRODUCT_NAME+" = "+productName;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all records and adding to the list
+        int productID = -1;
+
+        if (c.moveToFirst()) {
+            productID = c.getInt(c.getColumnIndex(COLUMN_PRODUCT_ID));
+        }
+        //if returns -1 than there is no such a product in database
+        //so you have to add it....
+        return productID;
+    }
+
+    public static void main(String[] args){
+        DatabaseHelper db = new DatabaseHelper(null,null,null,1);
+        db.getProductId("Masło");
+    }
+
 
     public List<Recipe> getAllRecipeList() {
         Log.e("DatabaseHelper","getAllRecipeList");

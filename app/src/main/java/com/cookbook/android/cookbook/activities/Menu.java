@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.cookbook.android.cookbook.AddRecipeActivity;
 import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
 import com.cookbook.android.cookbook.classes.Image;
@@ -21,7 +22,7 @@ import java.io.OutputStream;
 
 public class Menu extends AppCompatActivity {
     DatabaseHelper databaseHelper;
-    Button allRecipesBtn, findRecipeBtn;
+    Button allRecipesBtn, findRecipeBtn, addRecipeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class Menu extends AppCompatActivity {
     public void values(){
         allRecipesBtn = (Button)findViewById(R.id.buttonShowAllRecipes);
         findRecipeBtn = (Button)findViewById(R.id.buttonSelectProducts);
+        addRecipeBtn = (Button)findViewById(R.id.buttonAddRecipe);
 
         allRecipesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +61,13 @@ public class Menu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ProductsList.class);
+                startActivity(intent);
+            }
+        });
+        addRecipeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), AddRecipeActivity.class);
                 startActivity(intent);
             }
         });

@@ -44,5 +44,4 @@ public class Product {
     // beverage - coffe/tea, juice, water,
     // fats
     // nuts
-
 }

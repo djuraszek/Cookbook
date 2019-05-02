@@ -11,7 +11,7 @@ public class Recipe {
     private double rating;
     private String portion;
     private String preparation;
-    private String[] preparations;
+//    private String[] preparations;
     private ArrayList<Ingredient> ingredients;
     private Image image;
 
@@ -24,7 +24,7 @@ public class Recipe {
         this.portion = portion;
 
         ingredients = new ArrayList<>();
-        preparations = preparation.split("\n");
+//        preparations = preparation.split("\n");
     }
 
     public String toString(){
@@ -93,8 +93,8 @@ public class Recipe {
         this.image = image;
     }
 
-    public String[] getPreparations(){
-        return preparations;
-    }
+//    public String[] getPreparations(){
+//        return preparations;
+//    }
 
 }
