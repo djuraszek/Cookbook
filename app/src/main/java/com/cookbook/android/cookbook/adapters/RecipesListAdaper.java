@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
@@ -58,18 +59,12 @@ public class RecipesListAdaper extends BaseAdapter {
     @SuppressLint("ResourceAsColor")
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
         View listView = convertView;
-
         if (convertView == null) {
             inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
-
             listView = inflater.inflate(R.layout.layout_recipe_list, null);
         }
-
         recipe = recipeList.get(position);
-        System.out.println(recipe);
-
         TextView recipeName = (TextView)listView.findViewById(R.id.nameRecipeList);
         String name = recipe.getName();
         recipeName.setText(name);
@@ -82,19 +77,15 @@ public class RecipesListAdaper extends BaseAdapter {
             ImageView recipeImg = (ImageView) listView.findViewById(R.id.imgRecipeList);
             recipeImg.setImageBitmap(recipe.getImage());
         }
-
-//        Log.e("RecipesListAdapter","pos: "+position+" r: "+recipe.getRecipeID());
-
         listView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent recipeIntent = new Intent(context, RecipeActivity.class);
-                recipeIntent.putExtra("recipe", position+1);
-                System.out.println(recipe.getRecipeID());
+                int recipeID = recipeList.get(position).getRecipeID();
+                recipeIntent.putExtra("recipe", recipeID);
                 context.startActivity(recipeIntent);
             }
         });
-
         return listView;
     }
 }

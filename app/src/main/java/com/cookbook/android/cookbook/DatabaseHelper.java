@@ -17,6 +17,8 @@ import com.cookbook.android.cookbook.classes.Recipe;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -330,7 +332,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return categoriesList;
     }
-
-
-
 }

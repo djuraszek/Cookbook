@@ -54,6 +54,7 @@ public class Menu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), RecipesListActivity.class);
+                intent.putExtra("showFilteredList", false);
                 startActivity(intent);
             }
         });
@@ -91,19 +92,19 @@ public class Menu extends AppCompatActivity {
         is.close();
     }
 
-    public void addPhotos() {
-        int[] lista = {R.drawable.ciasto1,R.drawable.ciasto2,R.drawable.ciasto3,R.drawable.ciasto4,R.drawable.ciasto5
-                ,R.drawable.ciasto6,R.drawable.ciasto7,R.drawable.ciasto8,R.drawable.ciasto9,R.drawable.ciasto10
-                ,R.drawable.ciasto11,R.drawable.ciasto12,R.drawable.ciasto13,R.drawable.ciasto27,R.drawable.ciasto28,R.drawable.ciasto29
-                ,R.drawable.ciasto30,R.drawable.ciasto31,R.drawable.ciasto32,R.drawable.ciasto33};
-
-        for(int i=0; i<lista.length;i++){
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), lista[i]);
-            Image image = new Image(i+1,bitmap,i+1);
-            databaseHelper.addImage(image);
-        }
-
-    }
+//    public void addPhotos() {
+//        int[] lista = {R.drawable.ciasto1,R.drawable.ciasto2,R.drawable.ciasto3,R.drawable.ciasto4,R.drawable.ciasto5
+//                ,R.drawable.ciasto6,R.drawable.ciasto7,R.drawable.ciasto8,R.drawable.ciasto9,R.drawable.ciasto10
+//                ,R.drawable.ciasto11,R.drawable.ciasto12,R.drawable.ciasto13,R.drawable.ciasto27,R.drawable.ciasto28,R.drawable.ciasto29
+//                ,R.drawable.ciasto30,R.drawable.ciasto31,R.drawable.ciasto32,R.drawable.ciasto33};
+//
+//        for(int i=0; i<lista.length;i++){
+//            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), lista[i]);
+//            Image image = new Image(i+1,bitmap,i+1);
+//            databaseHelper.addImage(image);
+//        }
+//
+//    }
 
 
 }
