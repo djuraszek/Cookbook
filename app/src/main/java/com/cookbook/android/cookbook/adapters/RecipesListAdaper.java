@@ -11,13 +11,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
 import com.cookbook.android.cookbook.activities.RecipeActivity;
+import com.cookbook.android.cookbook.classes.Image;
 import com.cookbook.android.cookbook.classes.Recipe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
@@ -32,11 +33,13 @@ public class RecipesListAdaper extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private List<Recipe> recipeList;
+    private List<Image> imageList;
 
     public RecipesListAdaper(Context context, List<Recipe> recipeList) {
         Log.e("SeansListAdapter","set Adapter od Screening List");
         this.context = context;
         this.recipeList = recipeList;
+        this.imageList = new ArrayList<>();
 
         if(showLogs)Log.v("ListAdapter","seansow w dniu: "+recipeList.size());
     }
@@ -65,6 +68,8 @@ public class RecipesListAdaper extends BaseAdapter {
             listView = inflater.inflate(R.layout.layout_recipe_list, null);
         }
         recipe = recipeList.get(position);
+        imageList.add(position,recipe.getImage());
+
         TextView recipeName = (TextView)listView.findViewById(R.id.nameRecipeList);
         String name = recipe.getName();
         recipeName.setText(name);
@@ -73,9 +78,9 @@ public class RecipesListAdaper extends BaseAdapter {
         String rating = "Ocena: "+recipe.getRating();
         ratingName.setText(rating);
 
-        if(recipe.getImage()!= null) {
+        if(recipe.getBitmapImage()!= null) {
             ImageView recipeImg = (ImageView) listView.findViewById(R.id.imgRecipeList);
-            recipeImg.setImageBitmap(recipe.getImage());
+            recipeImg.setImageBitmap(imageList.get(position).getBitmap());
         }
         listView.setOnClickListener(new View.OnClickListener() {
             @Override

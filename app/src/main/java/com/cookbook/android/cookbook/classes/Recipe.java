@@ -83,7 +83,13 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
-    public Bitmap getImage() {
+    public Image getImage() {
+        if(image!=null)
+            return image;
+        else return null;
+    }
+
+    public Bitmap getBitmapImage() {
         if(image!=null)
             return image.getBitmap();
         else return null;

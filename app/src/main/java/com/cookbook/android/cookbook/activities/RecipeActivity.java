@@ -1,6 +1,5 @@
 package com.cookbook.android.cookbook.activities;
 
-import android.support.v4.app.INotificationSideChannel;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
@@ -63,8 +61,9 @@ public class RecipeActivity extends AppCompatActivity {
             String portion = "" + recipe.getPortion();
             portionTV.setText(portion);
 
-            if(recipe.getImage()!= null)image.setImageBitmap(recipe.getImage());
-            else image.setVisibility(View.GONE);
+            if(recipe.getBitmapImage()!= null)image.setImageBitmap(recipe.getBitmapImage());
+            else {
+                image.setVisibility(View.GONE);}
         }
         else
             Log.e("RecipeActivity","recipe == null");

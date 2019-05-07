@@ -85,6 +85,7 @@ public class RecipesListActivity extends AppCompatActivity {
 //            }
         }
         else {
+            //todo tutaj wywala null pointer jak nie ma
             textViewEmptyMessage.setVisibility(View.VISIBLE);
         }
     }
