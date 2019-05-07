@@ -24,7 +24,7 @@ public class RecipesListActivity extends AppCompatActivity {
     TextView textView, textViewEmptyMessage;
     RecipesBookDB recipesBookDB;
     RecipesListAdaper recipesListAdaper;
-    SearchView searchView;
+//    SearchView searchView;
     //todo this app shows recipes specified by user by all
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +36,9 @@ public class RecipesListActivity extends AppCompatActivity {
 
         recipesListView = (ListView)findViewById(R.id.recipesList);
         recipesListView2 = (ListView)findViewById(R.id.recipesList2);
-        searchView = (SearchView)findViewById(R.id.searchView);
-        textView = (TextView)findViewById(R.id.recipesText2);
-        textViewEmptyMessage = (TextView) findViewById(R.id.emptyMessage);
+//        searchView = (SearchView)findViewById(R.id.searchView);
+//        textView = (TextView)findViewById(R.id.recipesText2);
+//        textViewEmptyMessage = (TextView) findViewById(R.id.emptyMessage);
 
         Boolean showFilteredList = getIntent().getExtras().getBoolean("showFilteredList");
         if(showFilteredList) loadSelectedRecipes();
@@ -50,23 +50,23 @@ public class RecipesListActivity extends AppCompatActivity {
         recipesListAdaper = new RecipesListAdaper(this, recipes);
         recipesListView = (ListView)findViewById(R.id.recipesList);
         recipesListView.setAdapter(recipesListAdaper);
-        searchView.setVisibility(View.VISIBLE);
+//        searchView.setVisibility(View.VISIBLE);
         searchViewEvent();
     }
 
     public void searchViewEvent() {
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String name) {
-                searchRecipes(name);
-                return false;
-            }
-            @Override
-            public boolean onQueryTextChange(String name) {
-                searchRecipes(name);
-                return false;
-            }
-        });
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String name) {
+//                searchRecipes(name);
+//                return false;
+//            }
+//            @Override
+//            public boolean onQueryTextChange(String name) {
+//                searchRecipes(name);
+//                return false;
+//            }
+//        });
     }
 
     public void loadSelectedRecipes() {
@@ -77,12 +77,12 @@ public class RecipesListActivity extends AppCompatActivity {
             recipesListAdaper = new RecipesListAdaper(this, recipes);
             recipesListView.setAdapter(recipesListAdaper);
             List<Recipe> otherRecipes = recipesBookDB.getOtherRecipes();
-            if(otherRecipes.size() > 0) {
-                textView.setVisibility(View.VISIBLE);
-                recipesListAdaper = new RecipesListAdaper(this, otherRecipes);
-                recipesListView2.setAdapter(recipesListAdaper);
-                recipesListView2.setVisibility(View.VISIBLE);
-            }
+//            if(otherRecipes.size() > 0) {
+//                textView.setVisibility(View.VISIBLE);
+//                recipesListAdaper = new RecipesListAdaper(this, otherRecipes);
+//                recipesListView2.setAdapter(recipesListAdaper);
+//                recipesListView2.setVisibility(View.VISIBLE);
+//            }
         }
         else {
             textViewEmptyMessage.setVisibility(View.VISIBLE);

@@ -41,7 +41,7 @@ public class RecipesBookDB {
         }
         //add ingredients to recipe
         for(int i=0; i<ingredientList.size();i++){
-            System.out.println(i + " -> r:" + ingredientList.get(i).getRecipeId());
+//            System.out.println(i + " -> r:" + ingredientList.get(i).getRecipeId());
             if(ingredientList.get(i).getRecipeId()>0) {
                 getRecipe(ingredientList.get(i).getRecipeId()).addIngredient(ingredientList.get(i));
             }

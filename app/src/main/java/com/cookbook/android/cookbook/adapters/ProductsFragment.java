@@ -100,12 +100,13 @@ public class ProductsFragment extends Fragment {
     public List<Product> getProducts(){
         List<Product> allProductList = databaseHelper.getAllProductsList();
         Log.d("ProductsFragment","category: "+categoryName);
+        Log.d("ProductsFragment","allProductList: "+allProductList.size());
 //        System.out.println("ProductsFragment\n "+allProductList);
          List<Product> productList = new ArrayList<>();
          for(int i=0; i<allProductList.size();i++){
-             if(allProductList.get(i).getName()!= null) {
+             if(allProductList.get(i).getName()!= null && allProductList.get(i).getCategory()!= null) {
                  String productCategory = allProductList.get(i).getCategory();
-//             System.out.println(productCategory+ " "+ categoryName+ " ");
+//                System.out.println(productCategory+ " "+ categoryName+ " ");
                  if (productCategory.compareTo(categoryName) == 0) {
                      productList.add(allProductList.get(i));
                  }

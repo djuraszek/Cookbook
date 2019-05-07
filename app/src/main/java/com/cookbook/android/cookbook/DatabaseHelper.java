@@ -176,8 +176,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insert(TABLE_IMAGE_NAME, null, values);
+        Log.i("DatabaseHelper","Image added ");
         db.close();
     }
+
     public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
@@ -190,7 +192,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public int getProductId(String productName){
         String selectQuery = "SELECT  * FROM " + TABLE_PRODUCT_NAME;
-        selectQuery += " WHERE "+COLUMN_PRODUCT_NAME+" = "+productName;
+        selectQuery += " WHERE "+COLUMN_PRODUCT_NAME+" = \""+productName+"\"";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all records and adding to the list
@@ -297,12 +299,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all records and adding to the list
-        System.out.println(""+c.getColumnName(0)+
-                ""+c.getColumnName(1)+
-                ""+c.getColumnName(2));
+//        System.out.println(""+c.getColumnName(0)+
+//                ""+c.getColumnName(1)+
+//                ""+c.getColumnName(2));
+
         if (c.moveToFirst()) {
             do {
                 int imgID = c.getInt(c.getColumnIndex(COLUMN_IMAGE_ID));
+//                System.out.println(""+imgID);
                 byte[] byteArray = c.getBlob(c.getColumnIndex(COLUMN_IMAGE_BLOB));
                 int recipeFK = c.getInt(c.getColumnIndex(COLUMN_IMAGE_RECIPE));
 
@@ -331,5 +335,77 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (c.moveToNext());
         }
         return categoriesList;
+    }
+
+    public int getLastRecipeID(){
+        String query = "Select max(Recipe.RecipeId) FROM Recipe";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(query, null);
+        int maxId = 0;
+        if (c.moveToFirst()) {
+            maxId = c.getInt(0);
+        }
+        return maxId;
+    }
+    public int getLastIngredientID(){
+        String query = "Select max(Ingredient.IngredientId) FROM Ingredient";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(query, null);
+        int maxId = 0;
+        if (c.moveToFirst()) {
+            maxId = c.getInt(0);
+        }
+        return maxId;
+    }
+    public int getLastProductID(){
+        String query = "Select max(Product.ProductId) FROM Product";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(query, null);
+        int maxProductId = 0;
+        if (c.moveToFirst()) {
+            maxProductId = c.getInt(0);
+        }
+        return maxProductId;
+    }
+
+    private static final String SELECT_RECIPE_ID = "SELECT distinct Ingredient.RecipeId FROM Ingredient where Ingredient.RecipeId IN(";
+    private static final String SELECT_INGREDIENT = "SELECT Ingredient.RecipeId  FROM Ingredient  Join Product  " +
+            "                                   ON Ingredient.ProductId = Product.ProductId WHERE Product.ProductName = ";
+    //add product name with ' <> '
+    private static final String INTERSECT = "\n Intersect \n";
+    private static final String CLOSE_BARCKET = ")";
+
+    //select recipe by its products
+//    SELECT distinct Ingredient.RecipeId
+//    FROM 	Ingredient
+//    where	Ingredient.RecipeId IN(
+//            SELECT Ingredient.RecipeId  FROM Ingredient  Join Product  ON Ingredient.ProductId = Product.ProductId
+//            WHERE Product.ProductName = 'Mleko'
+//            Intersect
+//            SELECT Ingredient.RecipeId  FROM Ingredient  Join Product  ON Ingredient.ProductId = Product.ProductId
+//            WHERE Product.ProductName = 'Mąka pszenna')
+
+
+    public List<Integer> findRecicpeByProductsList(List<String> products){
+        String SELECT_QUERY = SELECT_RECIPE_ID;
+        for(String productName:products){
+            SELECT_QUERY += SELECT_INGREDIENT + "'"+productName+"'";
+            products.remove(productName);
+            if(products.size()!=0)SELECT_QUERY+= INTERSECT;
+        }
+        SELECT_QUERY += CLOSE_BARCKET;
+
+        List<Integer> foundRecipes = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(SELECT_QUERY, null);
+        // looping through all records and adding to the list
+        if (c.moveToFirst()) {
+            do {
+                int recipe = c.getInt(0);
+                foundRecipes.add(recipe);
+            } while (c.moveToNext());
+        }
+        return foundRecipes;
     }
 }

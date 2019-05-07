@@ -8,13 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.cookbook.android.cookbook.AddRecipeActivity;
 import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
 import com.cookbook.android.cookbook.classes.Image;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -92,19 +90,24 @@ public class Menu extends AppCompatActivity {
         is.close();
     }
 
-//    public void addPhotos() {
-//        int[] lista = {R.drawable.ciasto1,R.drawable.ciasto2,R.drawable.ciasto3,R.drawable.ciasto4,R.drawable.ciasto5
-//                ,R.drawable.ciasto6,R.drawable.ciasto7,R.drawable.ciasto8,R.drawable.ciasto9,R.drawable.ciasto10
-//                ,R.drawable.ciasto11,R.drawable.ciasto12,R.drawable.ciasto13,R.drawable.ciasto27,R.drawable.ciasto28,R.drawable.ciasto29
-//                ,R.drawable.ciasto30,R.drawable.ciasto31,R.drawable.ciasto32,R.drawable.ciasto33};
-//
+    public void addPhotos() {
+        int[] lista = {R.drawable.ciasto1,R.drawable.ciasto2,R.drawable.ciasto3,R.drawable.ciasto4,R.drawable.ciasto5
+                ,R.drawable.ciasto6,R.drawable.ciasto7,R.drawable.ciasto8,R.drawable.ciasto9,R.drawable.ciasto10
+                ,R.drawable.ciasto11,R.drawable.ciasto12,R.drawable.ciasto13,R.drawable.ciasto27,R.drawable.ciasto28,
+                R.drawable.ciasto29
+                ,R.drawable.ciasto30,R.drawable.ciasto31,R.drawable.ciasto32,R.drawable.ciasto33};
+
+
+        // int 16 wywala czyli ciasto29
+        int i=16;
 //        for(int i=0; i<lista.length;i++){
-//            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), lista[i]);
-//            Image image = new Image(i+1,bitmap,i+1);
+        if(i>=databaseHelper.getAllImagesList().size()) {
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), lista[i]);
+            Image image = new Image(i + 1, bitmap, i + 1);
 //            databaseHelper.addImage(image);
 //        }
-//
-//    }
+        }
+    }
 
 
 }
