@@ -20,7 +20,7 @@ import java.io.OutputStream;
 
 public class Menu extends AppCompatActivity {
     DatabaseHelper databaseHelper;
-    Button allRecipesBtn, findRecipeBtn, addRecipeBtn;
+    Button allRecipesBtn, findRecipeBtn, addRecipeBtn, topTenBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,16 @@ public class Menu extends AppCompatActivity {
         allRecipesBtn = (Button)findViewById(R.id.buttonShowAllRecipes);
         findRecipeBtn = (Button)findViewById(R.id.buttonSelectProducts);
         addRecipeBtn = (Button)findViewById(R.id.buttonAddRecipe);
+        topTenBtn = (Button)findViewById(R.id.buttonTopTen);
 
+        topTenBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), RecipesListActivity.class);
+                intent.putExtra("showTopRecipes", true);
+                startActivity(intent);
+            }
+        });
         allRecipesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -23,6 +23,7 @@ public class RecipesBookDB {
     private List<Image> imageList;
     private List<Recipe> recipeListByIngredients;
     private List<Recipe> otherRecipes;
+    private List<Recipe> topRecipes;
 
     public RecipesBookDB(DatabaseHelper databaseHelper) {
         this.databaseHelper = databaseHelper;
@@ -114,6 +115,16 @@ public class RecipesBookDB {
         return null;
     }
 
+    public List<Recipe> getTopRecipes() {
+        topRecipes = new ArrayList<>();
+        List<Recipe> tempList = sortListByRating(this.recipeList);
+        Collections.reverse(tempList);
+        for(int i = 0; i < 10; i++) {
+            topRecipes.add(tempList.get(i));
+        }
+        return topRecipes;
+    }
+
     public List<Recipe> getRecipeList() {
         return sortList(recipeList);
     }
@@ -134,6 +145,15 @@ public class RecipesBookDB {
         Collections.sort(recipes, new Comparator<Recipe>() {
             public int compare(Recipe r1, Recipe r2) {
                 return r1.getName().compareTo(r2.getName());
+            }
+        });
+        return recipes;
+    }
+
+    public List<Recipe> sortListByRating(List<Recipe> recipes) {
+        Collections.sort(recipes, new Comparator<Recipe>() {
+            public int compare(Recipe r1, Recipe r2) {
+                return new Double(r1.getRating()).compareTo(r2.getRating());
             }
         });
         return recipes;

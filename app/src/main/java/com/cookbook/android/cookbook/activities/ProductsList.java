@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
 import com.cookbook.android.cookbook.adapters.ProductsFragment;
+import com.cookbook.android.cookbook.adapters.ProductsListAdapter;
 import com.cookbook.android.cookbook.adapters.ViewPagerAdapter;
 
 import java.util.ArrayList;
@@ -59,25 +60,25 @@ public class ProductsList extends AppCompatActivity {
         showFilteredRecipes();
     }
 
-//    public void setVals(){
-//        categoryTV = (TextView)findViewById(R.id.categoryTV);
-//        productLV = (ListView)findViewById(R.id.productLV);
-//        //TODO get list of products for category
-//        ProductsListAdapter adapter = new ProductsListAdapter(getApplicationContext(),null);
-//        productLV.setAdapter(adapter);
-//    }
+    public void setVals(){
+        categoryTV = (TextView)findViewById(R.id.categoryTV);
+        productLV = (ListView)findViewById(R.id.productLV);
+        //TODO get list of products for category
+        ProductsListAdapter adapter = new ProductsListAdapter(getApplicationContext(),null);
+        productLV.setAdapter(adapter);
+    }
 
     public void showFilteredRecipes() {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(chosenIngredients.size() >= 3) {
+                if(chosenIngredients.size() >= 5) {
                     Intent intent = new Intent(view.getContext(), RecipesListActivity.class);
                     intent.putExtra("showFilteredList", true);
                     intent.putIntegerArrayListExtra("chosenIngredients", (ArrayList<Integer>) chosenIngredients);
                     startActivity(intent);
                 }
-                else Toast.makeText(getApplicationContext(), "Wybierz przynajmniej 3 produkty.", Toast.LENGTH_LONG).show();
+                else Toast.makeText(getApplicationContext(), "Wybierz przynajmniej 5 produktów.", Toast.LENGTH_LONG).show();
             }
         });
     }
