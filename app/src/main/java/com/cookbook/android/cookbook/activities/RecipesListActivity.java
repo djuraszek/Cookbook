@@ -28,6 +28,7 @@ public class RecipesListActivity extends AppCompatActivity {
     RecipesBookDB recipesBookDB;
     RecipesListAdaper recipesListAdaper;
     SearchView searchView;
+    ViewGroup.LayoutParams lp ;
     //todo this app shows recipes specified by user by all
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class RecipesListActivity extends AppCompatActivity {
         textView = (TextView)findViewById(R.id.recipesText2);
         textViewEmptyMessage = (TextView) findViewById(R.id.emptyMessage);
         startText = (TextView) findViewById(R.id.startText);
-
+        lp = (ViewGroup.LayoutParams) recipesListView.getLayoutParams();
         Boolean showFilteredList = getIntent().getExtras().getBoolean("showFilteredList");
         Boolean showTopRecipes = getIntent().getExtras().getBoolean("showTopRecipes");
         if(showFilteredList) loadSelectedRecipes();
@@ -85,6 +86,8 @@ public class RecipesListActivity extends AppCompatActivity {
             recipesListView.setAdapter(recipesListAdaper);
             if(otherRecipes.size() > 0) {
                 textView.setVisibility(View.VISIBLE);
+                lp.height = 600;
+                recipesListView.setLayoutParams(lp);
                 recipesListAdaper = new RecipesListAdaper(this, otherRecipes);
                 recipesListView2.setAdapter(recipesListAdaper);
                 recipesListView2.setVisibility(View.VISIBLE);
