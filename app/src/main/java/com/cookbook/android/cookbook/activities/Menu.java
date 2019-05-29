@@ -36,7 +36,7 @@ public class Menu extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
 
-        addPhotos();
+//        addPhotos();
 
         System.out.println(databaseHelper.getDatabaseName());
 //        getSupportActionBar().hide();
@@ -86,14 +86,10 @@ public class Menu extends AppCompatActivity {
     private void copyDatabase(File dbFile) throws IOException {
         InputStream is = getAssets().open(DB_NAME);
         OutputStream os = new FileOutputStream(dbFile);
-
-
-
         byte[] buffer = new byte[1024];
         while (is.read(buffer) > 0) {
             os.write(buffer);
         }
-
         os.flush();
         os.close();
         is.close();
@@ -102,15 +98,12 @@ public class Menu extends AppCompatActivity {
     public void addPhotos() {
         int[] lista = {};
 
-        // int 16 wywala czyli ciasto29
-        int j=databaseHelper.getAllImagesList().size();
-        int imageNo = 29;
+        int imageNo = 50;
         for(int i=0; i<lista.length;i++){
 
             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), lista[i]);
             Image image = new Image(imageNo, bitmap, imageNo);
             databaseHelper.addImage(image);
-            j++;
             imageNo++;
 //        }
         }

@@ -72,7 +72,7 @@
         android:textSize="30sp"
         android:fontFamily="@font/blackjar"
         android:textAllCaps="false"
-        android:text="Find recipes"
+        android:text="Wyszukaj"
         android:background="@drawable/label"
         />
     <Button
@@ -87,7 +87,7 @@
         android:textSize="30sp"
         android:fontFamily="@font/blackjar"
         android:textAllCaps="false"
-        android:text="All recipes"
+        android:text="Przepisy"
         />
     <Button
         android:id="@+id/buttonAddRecipe"
@@ -101,7 +101,7 @@
         android:textSize="30sp"
         android:fontFamily="@font/blackjar"
         android:textAllCaps="false"
-        android:text="Add recipe"
+        android:text="Dodaj"
         />
 
 </RelativeLayout>

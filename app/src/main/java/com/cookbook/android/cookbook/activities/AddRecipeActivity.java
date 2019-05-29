@@ -30,8 +30,11 @@ import android.widget.Toast;
 
 import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
+import com.cookbook.android.cookbook.adapters.AddedIngredientsListAdapter;
+import com.cookbook.android.cookbook.classes.Image;
 import com.cookbook.android.cookbook.classes.Ingredient;
 import com.cookbook.android.cookbook.classes.Product;
+import com.cookbook.android.cookbook.classes.Recipe;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -64,6 +67,8 @@ public class AddRecipeActivity extends AppCompatActivity {
     private List<Product> recipeProducts = new ArrayList<>();
     private List<Ingredient> recipeIngredients = new ArrayList<>();
 
+    AddedIngredientsListAdapter listAdapter;
+    boolean imageSet = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,13 +92,15 @@ public class AddRecipeActivity extends AppCompatActivity {
         addIngredientIB = (ImageButton) findViewById(R.id.addIngredientIB);
         mImageView = (ImageView) findViewById(R.id.addImgIV);
         addedIngredients = new ArrayList<>();
+
+        listAdapter = new AddedIngredientsListAdapter(AddRecipeActivity.this, recipeIngredients);
+        ingredientsListView.setAdapter(listAdapter);
+
         buttonListeners();
     }
 
-    ArrayList<String> addedIngredientsToList = new ArrayList<>();
 
     public void buttonListeners() {
-
         //add ingredient to ListView
         addIngredientIB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,20 +115,16 @@ public class AddRecipeActivity extends AppCompatActivity {
                         recipeProducts.add(p);
                         Ingredient i = new Ingredient(databaseHelper.getLastIngredientID() + 1,
                                 p, ingrCapacity, databaseHelper.getLastRecipeID() + 1);
+                        i.setProduct(p);
+                        Log.e("AddRecipeActivity.buttonList()",i.toString());
                         recipeIngredients.add(i);
+                        listAdapter.notifyDataSetChanged();
 
-                        TextView tV = new TextView(AddRecipeActivity.this);
-                        String textView = productName+ " "+ingrCapacity;
-                        tV.setText(textView);
-                        tV.setTextSize(20);
-//                        if(ingredientsListView.getAdapter()==null){
-//                            ArrayAdapter adapter = new ArrayAdapter(this,
-//                                    android.R.layout.simple_list_item_1, addedIngredientsToList);
-//                        }
-
+                        ingredientName.setText("");
+                        ingredientCapacity.setText("");
                     }
                     else{
-                        Toast.makeText(AddRecipeActivity.this, "Napotkano błąd. Prosimy spróbować ponowanie", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddRecipeActivity.this, "Nie ma produktu w bazie", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -132,11 +135,47 @@ public class AddRecipeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //if this than add Recipe
                 if (nameEditText.getText() != null && portionEditText.getText() != null &&
-                        preparationEditText.getText() != null && addedIngredients.size() != 0) {
-
+                        preparationEditText.getText() != null && addedIngredients.size() > 2) {
+                    addRecipe();
+                }
+                else if(nameEditText.getText() == null){
+                    Toast.makeText(getApplicationContext(),"Dodaj nazwę ciasta",Toast.LENGTH_SHORT).show();
+                }
+                else if(portionEditText.getText() == null){
+                    Toast.makeText(getApplicationContext(),"Dodaj informację o procji",Toast.LENGTH_SHORT).show();
+                }
+                else if(preparationEditText.getText() == null){
+                    Toast.makeText(getApplicationContext(),"Dodaj przygotowanie ciasta",Toast.LENGTH_SHORT).show();
+                }
+                else if(addedIngredients.size() < 2){
+                    Toast.makeText(getApplicationContext(),"Dodaj przynajmniej 3 składniki",Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    private void addRecipe(){
+        int recipeID = databaseHelper.getLastRecipeID() + 1;
+        String recipeName = nameEditText.getText().toString();
+        String recipePortion = portionEditText.getText().toString();
+        String recipePreparation = preparationEditText.getText().toString();
+        Recipe recipe = new Recipe(recipeID, recipeName, 0, recipePortion, recipePreparation);
+
+        databaseHelper.addRecipe(recipe);
+
+        if(imageSet) {
+            Image image = new Image(recipeID, mImageView.getDrawingCache(), recipeID);
+            databaseHelper.addImage(image);
+        }
+        //add ingredients
+        for(int i=0;i<recipeIngredients.size();i++){
+            databaseHelper.addIngredient(recipeIngredients.get(i));
+        }
+        //add products
+        for(int i=0;i<productsToAddToDB.size();i++){
+            databaseHelper.addProduct(productsToAddToDB.get(i));
+        }
+
     }
 
     private Product findProduct(String name){
@@ -285,6 +324,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                     String path = saveImage(bitmap);
                     Toast.makeText(AddRecipeActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
                     mImageView.setImageBitmap(bitmap);
+                    imageSet = true;
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -295,8 +335,10 @@ public class AddRecipeActivity extends AppCompatActivity {
         } else if (requestCode == CAMERA) {
             Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
             mImageView.setImageBitmap(thumbnail);
-            saveImage(thumbnail);
+            String path = saveImage(thumbnail);
             Toast.makeText(AddRecipeActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+            mImageView.setImageBitmap(thumbnail);
+            imageSet = true;
         }
     }
 

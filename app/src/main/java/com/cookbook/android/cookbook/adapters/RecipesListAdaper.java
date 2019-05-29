@@ -4,6 +4,7 @@ package com.cookbook.android.cookbook.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,10 @@ public class RecipesListAdaper extends BaseAdapter {
         this.recipeList = recipeList;
         this.imageList = new ArrayList<>();
 
+        for(int i=0;i<recipeList.size();i++){
+            imageList.add(recipeList.get(i).getImage());
+        }
+
         if(showLogs)Log.v("ListAdapter","seansow w dniu: "+recipeList.size());
     }
 
@@ -68,7 +73,7 @@ public class RecipesListAdaper extends BaseAdapter {
             listView = inflater.inflate(R.layout.layout_recipe_list, null);
         }
         recipe = recipeList.get(position);
-        imageList.add(position,recipe.getImage());
+//        imageList.add(position,recipe.getImage());
 
         TextView recipeName = (TextView)listView.findViewById(R.id.nameRecipeList);
         String name = recipe.getName();
@@ -82,6 +87,12 @@ public class RecipesListAdaper extends BaseAdapter {
             ImageView recipeImg = (ImageView) listView.findViewById(R.id.imgRecipeList);
             recipeImg.setImageBitmap(imageList.get(position).getBitmap());
         }
+        else{
+            ImageView recipeImg = (ImageView) listView.findViewById(R.id.imgRecipeList);
+            Drawable drawable = context.getResources().getDrawable(R.drawable.no_image_icon);
+            recipeImg.setImageDrawable(drawable);
+        }
+
         listView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
