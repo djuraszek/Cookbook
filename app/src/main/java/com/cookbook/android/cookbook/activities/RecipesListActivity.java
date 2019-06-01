@@ -117,11 +117,11 @@ public class RecipesListActivity extends AppCompatActivity {
         if(name.length() == 0) recipes = recipesBookDB.getRecipeList();
         else recipes = recipesBookDB.getRecipesByName(name);
         if(recipes.size() > 0) {
-            textViewEmptyMessage.setVisibility(View.INVISIBLE);
+            textViewEmptyMessage.setVisibility(View.GONE);
             recipesListAdaper = new RecipesListAdaper(getApplicationContext(), recipes);
             recipesListView.setAdapter(recipesListAdaper);
             recipesListView.setVisibility(View.VISIBLE);
         }
-        else textViewEmptyMessage.setVisibility(View.VISIBLE);
+        else textViewEmptyMessage.setVisibility(View.GONE);
     }
 }
