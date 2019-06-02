@@ -17,6 +17,7 @@ import com.cookbook.android.cookbook.classes.Rating;
 import com.cookbook.android.cookbook.classes.Recipe;
 
 import java.io.ByteArrayOutputStream;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -208,14 +209,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void updateRecipeRating(double rating, int recipeID) {
-         final String UPDATE_RECIPE = "UPDATE " + TABLE_RECIPE_NAME  +
-                " SET Rating = " + rating +
-                " WHERE " +
-                " RecipeId= " + recipeID;
+         final String UPDATE_RECIPE_QUERY = "UPDATE " + TABLE_RECIPE_NAME  +
+                " SET " + COLUMN_RECIPE_RATING + " = " + rating +
+                " WHERE " + COLUMN_RECIPE_ID +
+                " = " + recipeID + ";";
         Log.e("MyDBHandler","updateRecipeRating");
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(UPDATE_RECIPE, null);
-
+        db.execSQL(UPDATE_RECIPE_QUERY);
+        db.close();
     }
 
     public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
@@ -248,7 +249,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         DatabaseHelper db = new DatabaseHelper(null,null,null,1);
         db.getProductId("Masło");
     }
-
 
     public List<Recipe> getAllRecipeList() {
         Log.e("DatabaseHelper","getAllRecipeList");

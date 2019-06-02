@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static java.security.AccessController.getContext;
 
 /**
  * class to store all the data from DB
@@ -124,7 +123,7 @@ public class RecipesBookDB {
             if(ratings.get(i).getRecipeId() == recipeId) list.add(ratings.get(i));
         }
         for(Rating r : list) sum = sum + r.getRating();
-        double finalRating = sum / list.size();
+        double finalRating = (double) Math.round(sum / list.size());
         return finalRating;
     }
 
@@ -148,6 +147,7 @@ public class RecipesBookDB {
         databaseHelper.addRating(r);
         double finalRating = getRatingByRecipe(r.getRecipeId());
         databaseHelper.updateRecipeRating(finalRating, r.getRecipeId());
+        recipeList = databaseHelper.getAllRecipeList();
     }
 
     public List<Recipe> getTopRecipes() {
@@ -193,5 +193,4 @@ public class RecipesBookDB {
         });
         return recipes;
     }
-
 }
