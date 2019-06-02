@@ -1,16 +1,14 @@
 package com.cookbook.android.cookbook.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
@@ -126,4 +124,6 @@ public class RecipesListActivity extends AppCompatActivity {
         }
         else textViewEmptyMessage.setVisibility(View.GONE);
     }
+
+
 }
