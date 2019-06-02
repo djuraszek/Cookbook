@@ -15,6 +15,7 @@ public class Recipe {
     private ArrayList<Ingredient> ingredients;
     private Image image;
 
+    public Recipe(){}
 
     public Recipe(int recipeID, String name, double rating, String portion, String preparation) {
         this.recipeID = recipeID;
@@ -22,6 +23,17 @@ public class Recipe {
         this.preparation = preparation;
         this.rating = rating;
         this.portion = portion;
+
+        ingredients = new ArrayList<>();
+//        preparations = preparation.split("\n");
+    }
+
+    public Recipe(Recipe r) {
+        this.recipeID = r.recipeID;
+        this.name = r.name;
+        this.preparation = r.preparation;
+        this.rating = r.rating;
+        this.portion = r.portion;
 
         ingredients = new ArrayList<>();
 //        preparations = preparation.split("\n");

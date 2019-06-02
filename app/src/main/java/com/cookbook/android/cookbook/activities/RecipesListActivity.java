@@ -16,6 +16,7 @@ import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
 import com.cookbook.android.cookbook.RecipesBookDB;
 import com.cookbook.android.cookbook.adapters.RecipesListAdaper;
+import com.cookbook.android.cookbook.classes.Rating;
 import com.cookbook.android.cookbook.classes.Recipe;
 
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ public class RecipesListActivity extends AppCompatActivity {
         lp = (ViewGroup.LayoutParams) recipesListView.getLayoutParams();
         Boolean showFilteredList = getIntent().getExtras().getBoolean("showFilteredList");
         Boolean showTopRecipes = getIntent().getExtras().getBoolean("showTopRecipes");
+        List<Rating> ratings = recipesBookDB.getRatings();
         if(showFilteredList) loadSelectedRecipes();
         else if(showTopRecipes) loadTopRecipes();
         else loadAllRecipes();

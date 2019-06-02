@@ -5,16 +5,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
 import com.cookbook.android.cookbook.RecipesBookDB;
 import com.cookbook.android.cookbook.classes.Ingredient;
+import com.cookbook.android.cookbook.classes.Rating;
 import com.cookbook.android.cookbook.classes.Recipe;
 
 import java.util.Collections;
@@ -29,7 +32,7 @@ public class RecipeActivity extends AppCompatActivity {
     TextView recipeName, portionTV;
     ImageView image;
     RatingBar ratingBar;
-
+    Button ratingButton;
     RecipesBookDB recipesBookDB;
 
     @Override
@@ -43,7 +46,7 @@ public class RecipeActivity extends AppCompatActivity {
     }
 
     public void intentContent(){
-        int recipeId = getIntent().getIntExtra("recipe",-1);
+        final int recipeId = getIntent().getIntExtra("recipe",-1);
         recipe = recipesBookDB.getRecipe(recipeId);
 //        Log.e("RecipeActivity","recipe: "+recipe.toString());
 
@@ -54,6 +57,7 @@ public class RecipeActivity extends AppCompatActivity {
         image = (ImageView)findViewById(R.id.recipeImg);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         portionTV = (TextView) findViewById(R.id.portionTV);
+        ratingButton = (Button) findViewById(R.id.buttonUpdateRating);
 
         if(recipe!=null) {
             recipeName.setText(recipe.getName());
@@ -64,12 +68,20 @@ public class RecipeActivity extends AppCompatActivity {
             if(recipe.getBitmapImage()!= null)image.setImageBitmap(recipe.getBitmapImage());
             else {
                 image.setVisibility(View.GONE);}
+            ratingButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), "Zapisano!", Toast.LENGTH_LONG).show();
+                    int index = recipesBookDB.getRatings().size();
+                    Rating r = new Rating(index + 1, recipe.getRecipeID(), ratingBar.getRating());
+                    recipesBookDB.addRating(r);
+                }
+            });
         }
         else
             Log.e("RecipeActivity","recipe == null");
-
-
     }
+
 
     public void setListView(){
         RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(

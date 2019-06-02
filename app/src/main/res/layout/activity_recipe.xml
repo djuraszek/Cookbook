@@ -56,7 +56,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"/>
-
                 <!--<TextView-->
                     <!--android:id="@+id/avgRate"-->
                     <!--android:layout_width="wrap_content"-->
@@ -69,8 +68,18 @@
                     <!--android:layout_toRightOf="@+id/ratingBar"/>-->
 
             </RelativeLayout>
-        
 
+            <Button
+                android:id="@+id/buttonUpdateRating"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="55dp"
+                android:layout_marginEnd="55dp"
+                android:background="@drawable/label"
+                android:fontFamily="@font/blackjar"
+                android:text="Zapisz ocenę"
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

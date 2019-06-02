@@ -13,6 +13,7 @@ import android.util.Log;
 import com.cookbook.android.cookbook.classes.Image;
 import com.cookbook.android.cookbook.classes.Ingredient;
 import com.cookbook.android.cookbook.classes.Product;
+import com.cookbook.android.cookbook.classes.Rating;
 import com.cookbook.android.cookbook.classes.Recipe;
 
 import java.io.ByteArrayOutputStream;
@@ -60,6 +61,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_IMAGE_BLOB = "Blob";
     public static final String COLUMN_IMAGE_RECIPE = "Recipe";
 
+    //Rating(int id, int
+    public static final String TABLE_RATING_NAME = "Rating";
+    public static final String COLUMN_RATING_ID = "RatingId";
+    public static final String COLUMN_RATING_RECIPE = "RecipeId";
+    public static final String COLUMN_RATING = "Rating";
+
+
 
     public DatabaseHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -102,11 +110,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         + COLUMN_IMAGE_BLOB + " BLOB, "
                         + COLUMN_IMAGE_RECIPE + " INTEGER "
                         +"); ";
+        String SQL_CREATE_TABLE_RATING =
+                "CREATE TABLE " + TABLE_RATING_NAME + " ( "
+                        + COLUMN_RATING_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                        + COLUMN_RATING_RECIPE + " INTEGER, "
+                        + COLUMN_RATING + " NUMBER "
+                        +"); ";
 
         db.execSQL(SQL_CREATE_TABLE_IMAGE);
         db.execSQL(SQL_CREATE_TABLE_INGREDIENT);
         db.execSQL(SQL_CREATE_TABLE_PRODUCT);
         db.execSQL(SQL_CREATE_TABLE_RECIPE);
+        db.execSQL(SQL_CREATE_TABLE_RATING);
 
     }
 
@@ -178,6 +193,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_IMAGE_NAME, null, values);
         Log.i("DatabaseHelper","Image added ");
         db.close();
+    }
+
+    public void addRating(Rating r) {
+        Log.e("MyDBHandler","addRating");
+        ContentValues values = new ContentValues();
+        System.out.println("DB Rating : "+r.toString());
+        values.put(COLUMN_RATING_ID, r.getRatingID());
+        values.put(COLUMN_RATING_RECIPE, r.getRecipeId());
+        values.put(COLUMN_RATING, r.getRating());
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insert(TABLE_RATING_NAME, null, values);
+        db.close();
+    }
+
+    public void updateRecipeRating(double rating, int recipeID) {
+         final String UPDATE_RECIPE = "UPDATE " + TABLE_RECIPE_NAME  +
+                " SET Rating = " + rating +
+                " WHERE " +
+                " RecipeId= " + recipeID;
+        Log.e("MyDBHandler","updateRecipeRating");
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(UPDATE_RECIPE, null);
+
     }
 
     public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
@@ -284,6 +323,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String name = c.getString(c.getColumnIndex(COLUMN_PRODUCT_NAME));
                 String category = c.getString(c.getColumnIndex(COLUMN_PRODUCT_CATEGORY));
                 Product r = new Product(productID, name, category);
+                list.add(r);
+            } while (c.moveToNext());
+        }
+        return list;
+    }
+
+    public List<Rating> getRatings() {
+        Log.e("DatabaseHelper", "getRatings");
+        List<Rating> list = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + TABLE_RATING_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all records and adding to the list
+        if (c.moveToFirst()) {
+            do {
+                int ratingId = c.getInt(c.getColumnIndex(COLUMN_RATING_ID));
+                int recipeId = c.getInt(c.getColumnIndex(COLUMN_RATING_RECIPE));
+                double rating= c.getDouble(c.getColumnIndex(COLUMN_RATING));
+                Rating r = new Rating(ratingId, recipeId, rating);
                 list.add(r);
             } while (c.moveToNext());
         }
