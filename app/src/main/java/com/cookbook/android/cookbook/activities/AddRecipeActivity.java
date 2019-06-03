@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
 //import com.cookbook.android.cookbook.adapters.AddedIngredientsListAdapter;
+import com.cookbook.android.cookbook.adapters.AddedIngredientsListAdapter;
 import com.cookbook.android.cookbook.classes.Image;
 import com.cookbook.android.cookbook.classes.Ingredient;
 import com.cookbook.android.cookbook.classes.Product;
@@ -67,7 +68,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     private List<Product> recipeProducts = new ArrayList<>();
     private List<Ingredient> recipeIngredients = new ArrayList<>();
 
-//    AddedIngredientsListAdapter listAdapter;
+    AddedIngredientsListAdapter listAdapter;
     boolean imageSet = false;
 
     @Override
@@ -93,8 +94,8 @@ public class AddRecipeActivity extends AppCompatActivity {
         mImageView = (ImageView) findViewById(R.id.addImgIV);
         addedIngredients = new ArrayList<>();
 
-//        listAdapter = new AddedIngredientsListAdapter(AddRecipeActivity.this, recipeIngredients);
-//        ingredientsListView.setAdapter(listAdapter);
+        listAdapter = new AddedIngredientsListAdapter(AddRecipeActivity.this, recipeIngredients);
+        ingredientsListView.setAdapter(listAdapter);
 
         buttonListeners();
     }
