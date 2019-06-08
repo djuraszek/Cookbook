@@ -17,7 +17,7 @@
             android:id="@+id/addRecipeBtn"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
-            android:text="Dodaj przepis"
+            android:text="@string/add_recipe"
             android:textSize="30sp"
             android:fontFamily="@font/hensa"
             android:background="@drawable/label"
@@ -39,7 +39,7 @@
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nazwa:"
+            android:text="@string/name"
             android:textSize="20sp"/>
         <EditText
             android:id="@+id/nameEditText"
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Porcja:"
+            android:text="@string/portion"
             android:textSize="20sp"/>
         <EditText
             android:id="@+id/portionEditText"
@@ -59,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Przygotowanie:"
+            android:text="@string/preparation"
             android:textSize="20sp"/>
         <EditText
             android:id="@+id/preparationEditText"
@@ -70,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Składnik:"
+            android:text="@string/ingredient"
             android:textSize="20sp"/>
 
         <LinearLayout
@@ -103,13 +103,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Dodane składniki:"
+            android:text="@string/added_ingredients"
             android:textSize="20sp"/>
 
         <ListView
             android:layout_width="match_parent"
             android:id="@+id/ingredientsListView"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
         </ListView>
 
@@ -124,12 +125,9 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="7dp"
+                android:visibility="gone"
                 android:src="@drawable/add_img"/>
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
 
         </LinearLayout>
     </LinearLayout>

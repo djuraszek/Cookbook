@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
 //import com.cookbook.android.cookbook.adapters.AddedIngredientsListAdapter;
+import com.cookbook.android.cookbook.adapters.AddedIngredientsListAdapter;
 import com.cookbook.android.cookbook.classes.Image;
 import com.cookbook.android.cookbook.classes.Ingredient;
 import com.cookbook.android.cookbook.classes.Product;
@@ -56,6 +57,8 @@ public class AddRecipeActivity extends AppCompatActivity {
     private ImageView mImageView;
 
     ArrayList<Ingredient> addedIngredients;
+    int lastIngredientId =0;
+    int newProductID ;
 
     // Constant that's used as a parameter to assist with the permission requesting process.
     private static final int PERMISSION_CODE = 100;
@@ -67,7 +70,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     private List<Product> recipeProducts = new ArrayList<>();
     private List<Ingredient> recipeIngredients = new ArrayList<>();
 
-//    AddedIngredientsListAdapter listAdapter;
+    AddedIngredientsListAdapter listAdapter;
     boolean imageSet = false;
 
     @Override
@@ -76,6 +79,8 @@ public class AddRecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_recipe);
         databaseHelper = new DatabaseHelper(this);
         initVals();
+        lastIngredientId = databaseHelper.getLastIngredientID();
+        newProductID = databaseHelper.getLastProductID();
 
         runUi();
     }
@@ -93,11 +98,12 @@ public class AddRecipeActivity extends AppCompatActivity {
         mImageView = (ImageView) findViewById(R.id.addImgIV);
         addedIngredients = new ArrayList<>();
 
-//        listAdapter = new AddedIngredientsListAdapter(AddRecipeActivity.this, recipeIngredients);
-//        ingredientsListView.setAdapter(listAdapter);
+        listAdapter = new AddedIngredientsListAdapter(AddRecipeActivity.this, recipeIngredients);
+        ingredientsListView.setAdapter(listAdapter);
 
         buttonListeners();
     }
+
 
 
     public void buttonListeners() {
@@ -113,11 +119,12 @@ public class AddRecipeActivity extends AppCompatActivity {
                     Product p = findProduct(productName);
                     if(p!= null && ingredientsListView!= null) {
                         recipeProducts.add(p);
-                        Ingredient i = new Ingredient(databaseHelper.getLastIngredientID() + 1,
+                        Ingredient i = new Ingredient(lastIngredientId + 1,
                                 p, ingrCapacity, databaseHelper.getLastRecipeID() + 1);
                         i.setProduct(p);
                         Log.e("AddRecipeActivity.buttonList()",i.toString());
                         recipeIngredients.add(i);
+                        lastIngredientId += 1;
 //                        listAdapter.notifyDataSetChanged();
 
                         ingredientName.setText("");
@@ -135,7 +142,8 @@ public class AddRecipeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //if this than add Recipe
                 if (nameEditText.getText() != null && portionEditText.getText() != null &&
-                        preparationEditText.getText() != null && addedIngredients.size() > 2) {
+                        preparationEditText.getText() != null && recipeIngredients.size() > 2) {
+                    Toast.makeText(getApplicationContext(),"Dodano!",Toast.LENGTH_SHORT).show();
                     addRecipe();
                 }
                 else if(nameEditText.getText() == null){
@@ -147,7 +155,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 else if(preparationEditText.getText() == null){
                     Toast.makeText(getApplicationContext(),"Dodaj przygotowanie ciasta",Toast.LENGTH_SHORT).show();
                 }
-                else if(addedIngredients.size() < 2){
+                else if(recipeIngredients.size() < 2){
                     Toast.makeText(getApplicationContext(),"Dodaj przynajmniej 3 składniki",Toast.LENGTH_SHORT).show();
                 }
             }
@@ -161,6 +169,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         String recipePreparation = preparationEditText.getText().toString();
         Recipe recipe = new Recipe(recipeID, recipeName, 0, recipePortion, recipePreparation);
 
+        System.out.println(recipe.toString());
         databaseHelper.addRecipe(recipe);
 
         if(imageSet) {
@@ -168,17 +177,22 @@ public class AddRecipeActivity extends AppCompatActivity {
             databaseHelper.addImage(image);
         }
         //add ingredients
+        Log.e("addRecipe()","add ingredients");
         for(int i=0;i<recipeIngredients.size();i++){
+            System.out.println(recipeIngredients.get(i).toString());
             databaseHelper.addIngredient(recipeIngredients.get(i));
         }
         //add products
+        Log.e("addRecipe()","add products");
         for(int i=0;i<productsToAddToDB.size();i++){
+            System.out.println(productsToAddToDB.get(i).toString());
             databaseHelper.addProduct(productsToAddToDB.get(i));
         }
 
     }
 
     private Product findProduct(String name){
+        name = toUpperCase(name);
         int productID = databaseHelper.getProductId(name);
         if(productID>=0){
             for(int i=0;i<databaseHelper.getAllProductsList().size();i++){
@@ -188,12 +202,16 @@ public class AddRecipeActivity extends AppCompatActivity {
             }
         }
         else{
-            int newProductID = databaseHelper.getLastProductID()+1;
-            Product p = new Product(newProductID,name,"Inne");
+            Product p = new Product(newProductID+1,name,"Inne");
             productsToAddToDB.add(p);
+            newProductID += 1;
             return p;
         }
         return null;
+    }
+
+    private String toUpperCase(String text){
+        return text.substring(0,1).toUpperCase() + text.substring(1).toLowerCase();
     }
 
     private void requestPermissions() {

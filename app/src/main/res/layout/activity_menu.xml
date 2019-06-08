@@ -7,6 +7,15 @@
     android:layout_width="match_parent"
     android:background="@drawable/background2">
 
+    <Button
+        android:id="@+id/language"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text="@string/language"
+        android:layout_margin="10dp"
+        android:layout_alignParentEnd="true"
+        android:textSize="20sp"/>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -72,7 +81,7 @@
         android:textSize="30sp"
         android:fontFamily="@font/blackjar"
         android:textAllCaps="false"
-        android:text="Wyszukaj"
+        android:text="@string/search"
         android:background="@drawable/label"
         />
     <Button
@@ -87,7 +96,7 @@
         android:textSize="30sp"
         android:fontFamily="@font/blackjar"
         android:textAllCaps="false"
-        android:text="Przepisy"
+        android:text="@string/recipe"
         />
     <Button
         android:id="@+id/buttonAddRecipe"
@@ -101,7 +110,7 @@
         android:textSize="30sp"
         android:fontFamily="@font/blackjar"
         android:textAllCaps="false"
-        android:text="Dodaj"
+        android:text="@string/add"
         />
 
 </RelativeLayout>

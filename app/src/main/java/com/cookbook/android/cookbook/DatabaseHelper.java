@@ -152,7 +152,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         System.out.println("DB Ingredient: "+i.toString());
 
-
         values.put(COLUMN_INGREDIENT_ID, i.getIngedientID());
         values.put(COLUMN_INGREDIENT_PRODUCT, i.getProduct().getProductID());
         values.put(COLUMN_INGREDIENT_QUANTITY, i.getQuantity());
@@ -275,7 +274,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public List<Ingredient> getAllIngredientList() {
-        Log.e("DatabaseHelper","getAllIngredientList");
+//        Log.e("DatabaseHelper","getAllIngredientList");
         List<Ingredient> list = new ArrayList<>();
         List<Product> prodList = getAllProductsList();
 //        List<Recipe> recipesList = getAllRecipeList();
@@ -331,19 +330,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public List<Rating> getRatings() {
         Log.e("DatabaseHelper", "getRatings");
         List<Rating> list = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM " + TABLE_RATING_NAME;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, null);
-        // looping through all records and adding to the list
-        if (c.moveToFirst()) {
-            do {
-                int ratingId = c.getInt(c.getColumnIndex(COLUMN_RATING_ID));
-                int recipeId = c.getInt(c.getColumnIndex(COLUMN_RATING_RECIPE));
-                double rating= c.getDouble(c.getColumnIndex(COLUMN_RATING));
-                Rating r = new Rating(ratingId, recipeId, rating);
-                list.add(r);
-            } while (c.moveToNext());
-        }
+//        String selectQuery = "SELECT  * FROM " + TABLE_RATING_NAME;
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor c = db.rawQuery(selectQuery, null);
+//        // looping through all records and adding to the list
+//        if (c.moveToFirst()) {
+//            do {
+//                int ratingId = c.getInt(c.getColumnIndex(COLUMN_RATING_ID));
+//                int recipeId = c.getInt(c.getColumnIndex(COLUMN_RATING_RECIPE));
+//                double rating= c.getDouble(c.getColumnIndex(COLUMN_RATING));
+//                Rating r = new Rating(ratingId, recipeId, rating);
+//                list.add(r);
+//            } while (c.moveToNext());
+//        }
         return list;
     }
 

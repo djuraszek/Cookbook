@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CookBook</string>
+
+    <string name="search">Search</string>
+    <string name="name">Name</string>
+    <string name="ingredient">Ingredient</string>
+    <string name="portion">Portion</string>
+    <string name="preparation">Preparation</string>
+    <string name="added_ingredients">Added ingredients:</string>
+    <string name="add">Add</string>
+    <string name="add_recipe">Add recipe</string>
+    <string name="recipe">Recipes</string>
+    <string name="language">PL</string>
+</resources>

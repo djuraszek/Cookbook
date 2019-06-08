@@ -62,9 +62,9 @@ public class AddedIngredientsListAdapter extends BaseAdapter {
         TextView quantTV = (TextView)listView.findViewById(R.id.ingredientQuantity);
         ImageButton delteButton = (ImageButton) listView.findViewById(R.id.deleteImageButton);
 
-        Log.e("AddedIngredListAdapter","listView == null -> "+(listView==null));
-        Log.e("AddedIngredListAdapter","prodNameTV == null -> "+(prodNameTV==null));
-        Log.e("AddedIngredListAdapter","quantTV == null -> "+(quantTV==null));
+//        Log.e("AddedIngredListAdapter","listView == null -> "+(listView==null));
+//        Log.e("AddedIngredListAdapter","prodNameTV == null -> "+(prodNameTV==null));
+//        Log.e("AddedIngredListAdapter","quantTV == null -> "+(quantTV==null));
         //set texts
         prodNameTV.setText(name);
         quantTV.setText(quantity);
