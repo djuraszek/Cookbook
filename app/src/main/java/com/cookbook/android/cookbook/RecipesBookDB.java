@@ -127,6 +127,13 @@ public class RecipesBookDB {
         return finalRating;
     }
 
+    public void saveAllRating(){
+        for(int i =0; i < recipeList.size(); i++) {
+            Rating r = new Rating(i, recipeList.get(i).getRecipeID(),  recipeList.get(i).getRating());
+            addRating(r);
+        }
+    }
+
     public List<Rating> getRatings() { return ratings;}
 
     public List<Recipe> getOtherRecipes() {
@@ -143,11 +150,9 @@ public class RecipesBookDB {
     }
 
     public void addRating(Rating r) {
-        System.out.println("gowno=="+r.getRatingID());
         databaseHelper.addRating(r);
         double finalRating = getRatingByRecipe(r.getRecipeId());
         databaseHelper.updateRecipeRating(finalRating, r.getRecipeId());
-        recipeList = databaseHelper.getAllRecipeList();
     }
 
     public List<Recipe> getTopRecipes() {

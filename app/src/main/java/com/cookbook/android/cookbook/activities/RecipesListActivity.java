@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cookbook.android.cookbook.DatabaseHelper;
 import com.cookbook.android.cookbook.R;
@@ -41,12 +42,11 @@ public class RecipesListActivity extends AppCompatActivity {
         recipesListView2 = (ListView)findViewById(R.id.recipesList2);
         searchView = (SearchView)findViewById(R.id.searchView);
         textView = (TextView)findViewById(R.id.recipesText2);
-        textViewEmptyMessage = (TextView) findViewById(R.id.emptyMessage);
         startText = (TextView) findViewById(R.id.startText);
         lp = (ViewGroup.LayoutParams) recipesListView.getLayoutParams();
+//        recipesBookDB.saveAllRating();
         Boolean showFilteredList = getIntent().getExtras().getBoolean("showFilteredList");
         Boolean showTopRecipes = getIntent().getExtras().getBoolean("showTopRecipes");
-        List<Rating> ratings = recipesBookDB.getRatings();
         if(showFilteredList) loadSelectedRecipes();
         else if(showTopRecipes) loadTopRecipes();
         else loadAllRecipes();
@@ -116,13 +116,9 @@ public class RecipesListActivity extends AppCompatActivity {
         List<Recipe> recipes;
         if(name.length() == 0) recipes = recipesBookDB.getRecipeList();
         else recipes = recipesBookDB.getRecipesByName(name);
-        if(recipes.size() > 0) {
-            textViewEmptyMessage.setVisibility(View.GONE);
             recipesListAdaper = new RecipesListAdaper(getApplicationContext(), recipes);
             recipesListView.setAdapter(recipesListAdaper);
             recipesListView.setVisibility(View.VISIBLE);
-        }
-        else textViewEmptyMessage.setVisibility(View.GONE);
     }
 
 

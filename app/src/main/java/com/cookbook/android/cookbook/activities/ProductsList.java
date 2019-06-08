@@ -72,13 +72,13 @@ public class ProductsList extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(chosenIngredients.size() >= 5) {
+                if(chosenIngredients.size() >= 3) {
                     Intent intent = new Intent(view.getContext(), RecipesListActivity.class);
                     intent.putExtra("showFilteredList", true);
                     intent.putIntegerArrayListExtra("chosenIngredients", (ArrayList<Integer>) chosenIngredients);
                     startActivity(intent);
                 }
-                else Toast.makeText(getApplicationContext(), "Wybierz przynajmniej 5 produktów.", Toast.LENGTH_LONG).show();
+                else Toast.makeText(getApplicationContext(), "Wybierz przynajmniej 3 produkty.", Toast.LENGTH_LONG).show();
             }
         });
     }

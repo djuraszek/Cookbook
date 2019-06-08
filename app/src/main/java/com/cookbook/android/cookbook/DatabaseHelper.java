@@ -194,7 +194,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+
+
     public void addRating(Rating r) {
+        r.setRatingID(getLastRatingID()+1);
         Log.e("MyDBHandler","addRating");
         ContentValues values = new ContentValues();
         System.out.println("DB Rating : "+r.toString());
@@ -344,6 +347,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //            } while (c.moveToNext());
 //        }
         return list;
+    }
+
+    public int getLastRatingID(){
+        String query = "Select max(Rating.RatingId) FROM Rating";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(query, null);
+        int maxId = 0;
+        if (c.moveToFirst()) {
+            maxId = c.getInt(0);
+        }
+        return maxId;
     }
 
     public List<Image> getAllImagesList(){

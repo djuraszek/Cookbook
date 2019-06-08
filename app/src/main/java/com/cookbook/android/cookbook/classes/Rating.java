@@ -10,6 +10,11 @@ public class Rating {
         this.recipeID = recipeId;
         this.rating = rating;
     }
+    public Rating(int recipeId, double rating) {
+        this.recipeID = recipeId;
+        this.rating = rating;
+    }
+
 
     public double getRating() {
         return rating;

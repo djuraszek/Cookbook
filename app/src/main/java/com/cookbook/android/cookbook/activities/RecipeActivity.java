@@ -59,6 +59,15 @@ public class RecipeActivity extends AppCompatActivity {
         portionTV = (TextView) findViewById(R.id.portionTV);
         ratingButton = (Button) findViewById(R.id.buttonUpdateRating);
 
+        ratingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Zapisano!", Toast.LENGTH_LONG).show();
+//                    int index = recipesBookDB.getRatings().size();
+                Rating r = new Rating(recipe.getRecipeID(), ratingBar.getRating());
+                recipesBookDB.addRating(r);
+            }
+        });
         if(recipe!=null) {
             recipeName.setText(recipe.getName());
             ratingBar.setRating((float) recipe.getRating());
@@ -68,15 +77,6 @@ public class RecipeActivity extends AppCompatActivity {
             if(recipe.getBitmapImage()!= null)image.setImageBitmap(recipe.getBitmapImage());
             else {
                 image.setVisibility(View.GONE);}
-            ratingButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), "Zapisano!", Toast.LENGTH_LONG).show();
-                    int index = recipesBookDB.getRatings().size();
-                    Rating r = new Rating(index + 1, recipe.getRecipeID(), ratingBar.getRating());
-                    recipesBookDB.addRating(r);
-                }
-            });
         }
         else
             Log.e("RecipeActivity","recipe == null");
